@@ -1,0 +1,48 @@
+{
+    "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+    "AuthorDetails": {
+      "Name": "Method4",
+      "Description": "We’re development people. We build smart and brilliant software solutions",
+      "Url": "https://www.method4.co.uk/",
+      "ImageUrl": "https://www.method4.co.uk/media/rgad0qte/light-grey-m-2.png",
+      "SyncContributorsFromRepository": true
+    },
+    "Category": "Developer Tools",
+    "Description": "Import Migration Snapshots created using the Method4.UmbracoMigrator.Source package.",
+    "DocumentationUrl": "https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/dev/docs",
+    "LicenseTypes": [ "Free" ],
+    "IssueTrackerUrl": "https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/issues",
+    "PackageType": "Package",
+    "RelatedPackages": [
+      {
+        "PackageId": "Method4.UmbracoMigrator.Source",
+        "Description": "This package generates the Migration Snapshot files that will be imported into your new shiny v10+ site."
+      }
+    ],
+    "Screenshots": [
+      {
+        "ImageUrl": "https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/dev/docs/images/backofficedashboard.png",
+        "Caption": "The backoffice dashboard"
+      }
+    ],
+    "Tags": ["migration", "migrator", "snapshot", "import", "backoffice"],
+    "VersionSpecificPackageIds": [
+      {
+        "UmbracoMajorVersion": 10,
+        "PackageId": "Method4.UmbracoMigrator.Target"
+      },
+      {
+        "UmbracoMajorVersion": 11,
+        "PackageId": "Method4.UmbracoMigrator.Target"
+      },
+      {
+        "UmbracoMajorVersion": 12,
+        "PackageId": "Method4.UmbracoMigrator.Target"
+      },
+      {
+        "UmbracoMajorVersion": 13,
+        "PackageId": "Method4.UmbracoMigrator.Target"
+      }
+    ],
+    "VideoUrl": ""
+  }

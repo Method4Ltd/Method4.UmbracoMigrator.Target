@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language>
+	<area alias="treeHeaders">
+		<key alias="migration">Content Migration</key>
+		<key alias="migratorTarget">Method4 Migrator (Target)</key>
+	</area>
+
+	<area alias="migratorTarget">
+		<key alias="importMigrationSnapshot">Import Migration Snapshot</key>
+		<key alias="beginMigration">Begin migration</key>
+		<key alias="deleteAllSnapshots">Delete all uploaded snapshots</key>
+		<key alias="deleteAllRelations">Delete all relations</key>
+		<key alias="relationLookupTitle">ID and Key Lookup</key>
+		<key alias="relationLookupResultTitle">Result</key>
+		<key alias="relationLookupDescription">
+			On a migration import, a lookup table is created that contains the old nodes Keys/IDs and the corresponding new nodes Keys/IDs.
+			This then allows subsequent imports to simply update previously migrated nodes.
+		</key>
+	</area>
+</language>

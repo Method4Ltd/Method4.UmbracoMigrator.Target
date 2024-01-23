@@ -1,0 +1,16 @@
+﻿<umb-box>
+    <umb-box-header title="Migration Status Log">
+        <span>
+            SignalR connected:
+            <umb-icon title="signalr connected" ng-if="signalrHubConnected" icon="icon-check" class="small color-green">
+            </umb-icon><umb-icon title="signalr disconnected" ng-if="signalrHubConnected === false" icon="icon-delete" class="small color-red"></umb-icon>
+        </span>
+    </umb-box-header>
+    <umb-box-content>
+        <div>
+            <div class="message-list-container">
+                <ul class="message-list" id="messagesList"></ul>
+            </div>
+        </div>
+    </umb-box-content>
+</umb-box>

@@ -1,0 +1,29 @@
+﻿{
+  "bundleOptions": "None",
+  "name": "Method4.UmbracoMigrator.Target",
+  "version": "1",
+  "allowPackageTelemetry": true,
+  "css": [
+    "~/App_Plugins/Method4UmbracoMigratorTarget/backoffice/styles/main.css"
+  ],
+  "javascript": [
+    // inject libraries
+    "~/App_Plugins/Method4UmbracoMigratorTarget/backoffice/scripts/libraries/signalr.js",
+
+    // inject startup script
+    "~/App_Plugins/Method4UmbracoMigratorTarget/backoffice/scripts/startup.module.js",
+
+    // inject factories
+
+    // inject services
+    "~/App_Plugins/Method4UmbracoMigratorTarget/backoffice/scripts/services/migrator.service.js",
+    "~/App_Plugins/Method4UmbracoMigratorTarget/backoffice/scripts/services/relationLookup.service.js",
+
+    // inject directives
+    "~/App_Plugins/Method4UmbracoMigratorTarget/backoffice/scripts/directives/signalr-status.directive.js",
+    "~/App_Plugins/Method4UmbracoMigratorTarget/backoffice/scripts/directives/relationLookup.directive.js",
+
+    // inject controllers
+    "~/App_Plugins/Method4UmbracoMigratorTarget/backoffice/scripts/controllers/dashboard.controller.js"
+  ]
+}

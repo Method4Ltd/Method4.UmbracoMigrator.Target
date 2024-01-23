@@ -1,0 +1,121 @@
+﻿.migrator-dashboard {
+    position: absolute;
+    padding: 20px;
+    overflow: auto;
+    overflow-y: scroll;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+    .migrator-dashboard .settings-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .migrator-dashboard .settings-container__setting {
+    }
+
+    .migrator-dashboard .importer-container {
+    }
+
+    .migrator-dashboard .loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgb(0 0 0 / 24%);
+    }
+
+    .migrator-dashboard #importFilePicker {
+        display: none;
+    }
+
+    .migrator-dashboard .select-file {
+        margin-bottom: 10px;
+    }
+
+    .migrator-dashboard .upload-file {
+    }
+
+        .migrator-dashboard .upload-file .umb-button {
+            margin-left: 0;
+        }
+
+    .migrator-dashboard .filename {
+        margin-left: 10px;
+    }
+
+    .migrator-dashboard .filename--none {
+        color: #808080;
+    }
+
+    .migrator-dashboard .-selected {
+        box-shadow: inset 0 0 10px #4cff00;
+    }
+
+    .migrator-dashboard .snapshot-file-previews {
+        display: flex;
+        gap: 10px;
+    }
+
+    .migrator-dashboard .snapshot-file-previews__file {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-width: 120px;
+        padding: 10px 5px;
+        cursor: pointer;
+        border: 1px solid #ababac;
+        border-radius: 10px;
+        user-select: none;
+        text-align: center;
+    }
+
+    .migrator-dashboard .snapshot-file-preview__buttons {
+        display: flex;
+    }
+
+    .migrator-dashboard .message-list-container {
+        min-height: 50px;
+        max-height: 200px;
+        overflow: hidden;
+        overflow-y: scroll;
+        background-color: #f1f1f1;
+        padding: 10px 5px;
+        border-radius: 5px;
+    }
+
+    .migrator-dashboard .message-list {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .migrator-dashboard .relation-lookup-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .migrator-dashboard .relation-lookup-container input {
+            margin: 0;
+            width: 320px;
+        }
+
+    .migrator-dashboard .relation-lookup-result-container th {
+        text-align: left;
+        padding-right: 40px;
+    }
+    
+    .migrator-dashboard .relation-lookup-result-container td {
+        padding-right: 40px;
+    }
+
+
+    .migrator-dashboard .link {
+       text-decoration: underline;
+    }

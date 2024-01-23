@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
+
+	<!-- Information for the NuGet package -->
+	<PropertyGroup>
+		<PackageId>Method4.UmbracoMigrator.Target</PackageId>
+		<Title>Method4.UmbracoMigrator.Target</Title>
+		<Description>Import migration snapshots, created with Method4.UmbracoMigrator.Source, into Umbraco 10+</Description>
+		<Product>Method4.UmbracoMigrator.Target</Product>
+		<PackageTags>umbraco plugin package content migration</PackageTags>
+		<Authors>Owain Jones</Authors>
+		<Company>Method4 Ltd</Company>
+		<Copyright>Method4 ©️ 2024</Copyright>
+		<PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+		<PackageProjectUrl></PackageProjectUrl>
+		<RepositoryUrl></RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageReadmeFile>NUGET_README.md</PackageReadmeFile>
+		<PackageIcon>UmbracoMigratorTarget_Logo.png</PackageIcon>
+	</PropertyGroup>
+
+	<!-- Include NuGet dependencies -->
+	<ItemGroup>
+		<ProjectReference Include="..\Method4.UmbracoMigrator.Target.Core\Method4.UmbracoMigrator.Target.Core.csproj" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="[10.0.0,12.999)" />
+		<PackageReference Include="Umbraco.Cms.Web.Website" Version="[10.0.0,12.999)" />
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[10.0.0,12.999)" />
+	</ItemGroup>
+
+	<!-- Include our backoffice assets -->
+	<ItemGroup>
+		<Content Include="App_Plugins\Method4UmbracoMigratorTarget\**\*.*">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</Content>
+		<None Include="build\**\*.*">
+			<Pack>True</Pack>
+			<PackagePath>buildTransitive</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<!-- Do not include node modules -->
+	<ItemGroup>
+		<Compile Remove="node_modules\**" />
+		<EmbeddedResource Remove="node_modules\**" />
+		<None Remove="node_modules\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="App_Plugins\Method4UmbracoMigratorTarget\backoffice\scripts\directives\relationLookup.directive.js" />
+	  <None Remove="App_Plugins\Method4UmbracoMigratorTarget\backoffice\views\directives\relationLookup.html" />
+	</ItemGroup>
+
+	<!-- Include assets for NuGet -->
+	<ItemGroup>
+		<Content Include="../../docs/UmbracoMigratorTarget_Logo.png" Pack="true" PackagePath="\" />
+		<None Include="../../NUGET_README.txt" Pack="true" PackagePath="\" />
+		<None Include="../../NUGET_README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

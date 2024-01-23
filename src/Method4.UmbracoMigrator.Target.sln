@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Method4.UmbracoMigrator.Target", "Method4.UmbracoMigrator.Target\Method4.UmbracoMigrator.Target.csproj", "{E068B21C-8891-40FA-91A9-53AE3F5ADB5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Method4.UmbracoMigrator.Target.SampleSite", "Method4.UmbracoMigrator.Target.SampleSite\Method4.UmbracoMigrator.Target.SampleSite.csproj", "{D0DB15FA-F37B-445D-B9F2-FD61B42A4439}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Method4.UmbracoMigrator.Target.Core", "Method4.UmbracoMigrator.Target.Core\Method4.UmbracoMigrator.Target.Core.csproj", "{0F647C01-647B-4F67-A8F5-B8A1B3B39319}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E068B21C-8891-40FA-91A9-53AE3F5ADB5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E068B21C-8891-40FA-91A9-53AE3F5ADB5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E068B21C-8891-40FA-91A9-53AE3F5ADB5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E068B21C-8891-40FA-91A9-53AE3F5ADB5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0DB15FA-F37B-445D-B9F2-FD61B42A4439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0DB15FA-F37B-445D-B9F2-FD61B42A4439}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0DB15FA-F37B-445D-B9F2-FD61B42A4439}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0DB15FA-F37B-445D-B9F2-FD61B42A4439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F647C01-647B-4F67-A8F5-B8A1B3B39319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F647C01-647B-4F67-A8F5-B8A1B3B39319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F647C01-647B-4F67-A8F5-B8A1B3B39319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F647C01-647B-4F67-A8F5-B8A1B3B39319}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D82C081-BC34-45B6-859A-33D1F2A27AC8}
+	EndGlobalSection
+EndGlobal

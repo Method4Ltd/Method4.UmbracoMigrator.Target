@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<!-- Information for the NuGet package -->
+	<PropertyGroup>
+		<PackageId>Method4.UmbracoMigrator.Target.Core</PackageId>
+		<Title>Method4.UmbracoMigrator.Target.Core</Title>
+		<Description>Core package for Method4.UmbracoMigrator.Target</Description>
+		<Product>Method4.UmbracoMigrator.Target</Product>
+		<Authors>Owain Jones</Authors>
+		<Company>Method4 Ltd</Company>
+		<Copyright>Method4 ©️ 2024</Copyright>
+		<PackageLicenseExpression>MIT or MPL-2.0 ??????????????</PackageLicenseExpression>
+		<PackageProjectUrl></PackageProjectUrl>
+		<RepositoryUrl></RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
+
+	<!-- Include NuGet dependencies -->
+	<ItemGroup>
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
+		<PackageReference Include="Skybrud.Umbraco.Redirects" Version="[4.0.17,4.999)" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="[10.0.0,12.999)" />
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[10.0.0,12.999)" />
+		<PackageReference Include="Umbraco.Cms.Web.Common" Version="[10.0.0,12.999)" />
+	</ItemGroup>
+</Project>

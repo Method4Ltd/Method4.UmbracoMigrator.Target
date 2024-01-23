@@ -1,0 +1,113 @@
+﻿<div class="migrator-dashboard" ng-controller="migratorTarget.dashboardController as vm">
+    <umb-box>
+        <umb-box-header title="Settings">
+        </umb-box-header>
+        <umb-box-content>
+            <div class="settings-container">
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.DontPublishAfterImport"
+                            on-click="vm.toggleSetting('DontPublishAfterImport')"
+                            show-labels="true"
+                            label-on="Don't publish nodes after import"
+                            label-off="Don't publish nodes after import"
+                            label-position="right">
+                </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.OverwriteExistingValues"
+                            on-click="vm.toggleSetting('OverwriteExistingValues')"
+                            show-labels="true"
+                            label-on="Overwrite if the node/property already exists"
+                            label-off="Overwrite if the node/property already exists"
+                            label-position="right">
+                </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.DisableDefaultMappers"
+                            on-click="vm.toggleSetting('DisableDefaultMappers')"
+                            show-labels="true"
+                            label-on="Disable Default Mappers"
+                            label-off="Disable Default Mappers"
+                            label-position="right">
+                </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.CleanImport"
+                            on-click="vm.toggleSetting('CleanImport')"
+                            show-labels="true"
+                            label-on="Clean import (delete everything before importing)"
+                            label-off="Clean import (delete everything before importing)"
+                            label-position="right">
+                </umb-toggle>
+            </div>
+        </umb-box-content>
+    </umb-box>
+
+    <umb-box>
+        <umb-box-header title="Uploaded Migration Snapshots [~/wwwroot/migration-snapshots/]">
+            <umb-button action="vm.beginImport();"
+                        id="begin-import-button"
+                        label-key="migratorTarget_beginMigration"
+                        type="button"
+                        button-style="action"
+                        state="vm.beginMigrationButtonState"
+                        disabled="vm.settings.ChosenSnapshotName === null">
+            </umb-button>
+            <umb-button action="vm.deleteAllSnapshots()"
+                        label-key="migratorTarget_deleteAllSnapshots"
+                        type="button"
+                        button-style="danger"
+                        state="vm.deleteAllSnapshotsButtonState">
+            </umb-button>
+        </umb-box-header>
+        <umb-box-content>
+            <div class="snapshot-file-previews">
+                <div class="snapshot-file-previews__file" ng-repeat="item in vm.uploadedSnapshots | orderBy: 'CreateDate':true" ng-click="vm.selectSnapshot(item.FileName)" ng-class="(vm.settings.ChosenSnapshotName === item.FileName) ? '-selected' : ''">
+                    <umb-icon icon="icon-zip color-orange" class="large"></umb-icon>
+                    <span>{{item.FileName}}</span>
+                    <span>{{item.CreateDate | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+                    <span>{{item.SizeBytes}}</span>
+                    <div class="snapshot-file-preview__buttons">
+                        <umb-checkbox name="selected"
+                                      value="1"
+                                      model="(vm.settings.ChosenSnapshotName === item.FileName)">
+                        </umb-checkbox>
+                    </div>
+                </div>
+            </div>
+        </umb-box-content>
+    </umb-box>
+
+    <signalr-migration-status></signalr-migration-status>
+    
+    <relation-lookup></relation-lookup>
+
+    <umb-box>
+        <umb-box-header title="Tips">
+        </umb-box-header>
+        <umb-box-content>
+            <ul>
+                <li>
+                    <span>Depending on the size of the import, the UI can time out before the import completes. Watch the log for the import status.</span>
+                </li>
+                <li>
+                    <span>Need to support in place file replacements of the migrated media nodes?</span>
+                    <ul>
+                        <li>
+                            <span>Then you can use the <code>EnableMediaRedirectGeneration</code> app setting. Please see the documentation for further details.</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>Having trouble with RTE Macros with your custom mappers?</span>
+                    <ul>
+                        <li>
+                            <spn>You might need to use the <code>Umbraco.Cms.Infrastructure.Macros.MacroTagParser.FormatRichTextContentForPersistence()</code> method, to ensure that the macro html is formatted correctly.</spn>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </umb-box-content>
+    </umb-box>
+
+    <!--<div class="loader" id="migrator-loader" hidden>
+        <umb-load-indicator />
+    </div>-->
+</div>

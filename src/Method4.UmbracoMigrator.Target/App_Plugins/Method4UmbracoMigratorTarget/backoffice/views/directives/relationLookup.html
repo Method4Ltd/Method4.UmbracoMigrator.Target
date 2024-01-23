@@ -1,0 +1,67 @@
+﻿<umb-box>
+    <umb-box-header title="Migrated Relations Lookup">
+        <span>{{relationCount}} migration relations stored.</span>
+        <umb-button action="deleteAllRelations()"
+                    label-key="migratorTarget_deleteAllRelations"
+                    type="button"
+                    button-style="danger"
+                    state="deleteAllRelationsButtonState">
+        </umb-button>
+    </umb-box-header>
+    <umb-box-content>
+        <span>
+            <localize key="migratorTarget_relationLookupDescription"></localize>
+        </span>
+
+        <hr />
+        <h4><localize key="migratorTarget_relationLookupTitle"></localize></h4>
+        <form class="relation-lookup-container" ng-submit="searchRelations()">
+            <input name="oldKey"
+                   ng-keyup="clearInputs($event, 'oldKey')"
+                   type="text"
+                   ng-model="relationLookup.oldKeyLookup"
+                   placeholder="Old Key (GUID)" />
+            <input name="newKey"
+                   ng-keyup="clearInputs($event, 'newKey')"
+                   type="text"
+                   ng-model="relationLookup.newKeyLookup"
+                   placeholder="New Key (GUID)" />
+            <input name="oldId"
+                   ng-keyup="clearInputs($event, 'oldId')"
+                   type="text"
+                   ng-model="relationLookup.oldIdLookup"
+                   placeholder="Old ID" />
+            <input name="newId"
+                   type="text"
+                   ng-keyup="clearInputs($event, 'newId')"
+                   ng-model="relationLookup.newIdLookup"
+                   placeholder="New ID" />
+
+            <umb-button action="searchRelations()"
+                        icon="icon-search"
+                        type="button"
+                        button-style="info"
+                        state="lookupRelationButtonState">
+            </umb-button>
+        </form>
+        <div ng-if="relation !== null || relationNotFound">
+            <hr />
+            <h4><localize key="migratorTarget_relationLookupResultTitle"></localize></h4>
+            <span ng-if="relationNotFound">No migration ID/Key relation found.</span>
+            <table class="relation-lookup-result-container" ng-if="relation !== null">
+                <tr>
+                    <th>Old Key</th>
+                    <th>New Key</th>
+                    <th>Old ID</th>
+                    <th>New ID</th>
+                </tr>
+                <tr>
+                    <td>{{relation.OldKeyAsString}}</td>
+                    <td><a class="link" ng-click="openContentEditor($event, relation.NewId)">{{relation.NewKeyAsString}}</a></td>
+                    <td>{{relation.OldId}}</td>
+                    <td><a class="link" ng-click="openContentEditor($event, relation.NewId)">{{relation.NewId}}</a></td>
+                </tr>
+            </table>
+        </div>
+    </umb-box-content>
+</umb-box>
