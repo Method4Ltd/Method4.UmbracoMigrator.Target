@@ -43,9 +43,9 @@ Import Migration Snapshots created using the Method4.UmbracoMigrator.Source pack
 - Docs: https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/docs/README.md
 
 ## Roadmap
-Please see the [roadmap](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/dev/docs/ROADMAP.md) for a list of outstanding features and TODOs.
+Please see the [roadmap](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/docs/ROADMAP.md) for a list of outstanding features and TODOs.
 
 ## License
 Copyright &copy; [Method4](https://www.method4.co.uk/).
 
-All source code is licensed under the [Mozilla Public License](../LICENSE).
+All source code is licensed under the [Mozilla Public License](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/LICENSE).
