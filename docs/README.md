@@ -2,7 +2,7 @@
 
 # Method4.UmbracoMigrator.Target - Documentation
 
-Please see the [roadmap](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/dev/docs/ROADMAP.md) for a list of outstanding features and TODOs.
+Please see the [roadmap](./ROADMAP.md) for a list of outstanding features and TODOs.
 
 # The Backoffice Dashboard
 The dashboard can be found on the tree in the `Settings` section.
@@ -14,9 +14,9 @@ The dashboard can be found on the tree in the `Settings` section.
 - Overwrite if the node/property already exists
      - If a node already exists and a property, that should be mapped, already has a value; then we will overwrite that value.
 - Disable Default Mappers
-     - The built-in default mappers automatically maps any property that has an identical alias, this will disable that.
+     - The built-in default mappers automatically map any property that has an identical alias, this will disable that.
 - Clean Import
-     - This will delete all content, media and wipe the migrator key relations table prior to importing.
+     - This will delete all content, and media and wipe the migrator key relations table before importing.
 
 ## 🔎 Migrated Relations Lookup
 After importing a migration snapshot, the `MigrationLookups` database table will contain lookup tables of old node Keys and IDs and their corresponding new Keys and IDs.
@@ -43,7 +43,7 @@ Custom mappings can be defined using these interfaces, these custom mappings wil
 - If the property editor type has changed and you need to do a manual conversion.
 - If you need to manually modify a value for some other reason.
 
-Examples of custom mappers can be found in the sample site, and in the `/docs/custom_mapper_examples/` folder: https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/tree/main/docs/custom_mapper_examples
+Examples of custom mappers can be found in the sample site, and in the `/docs/custom_mapper_examples/` folder: [/docs/custom_mapper_examples](./custom_mapper_examples)
 
 ## ⚒️ IDocTypeMapping - `Method4.UmbracoMigrator.Target.Core.Mappers`
 ### Properties:
@@ -51,7 +51,7 @@ Examples of custom mappers can be found in the sample site, and in the `/docs/cu
 
 ### Methods:
 - _bool **CanIMap**(MigrationContent MigrationNode)_
-     - Tells the migrator if this mapper is able to map the given migrationNode.
+     - Tells the migrator if this mapper can map the given migrationNode.
 - _IContent **MapNode**(MigrationContent oldNode, IContent newNode, bool overwiteExisitingValues)_
      - Custom mapping logic goes here.
      - _newNode_ will be of the DocType defined in the _DocTypeAlias_ property. 
@@ -137,16 +137,16 @@ This service is for interacting with the MigrationKeyLookups database table, thi
 On the [Method4.UmbracoMigrator.Source](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Source) package, you can choose to include the physical media files in the migration snapshot, these would then be uploaded to your site's media folder (or Azure blob storage if configured) during a migration import.
 
 > **Note:** If you have a large amount of media files, this process can be very slow. 
-> <br />Thereore we recommend manually copying your media files accross. (e.g. using Azure Storage Explorer)
+> <br />Thereore we recommend manually copying your media files across. (e.g. using Azure Storage Explorer)
 
 ## ↗️ Automatic Media Redirects
 If a media file is deleted and re-uploaded on a media node (e.g. to replace an old file with an updated one), then the GUID slug in the URL will be different.
 
 This is due to the fact that the default Umbraco _IMediaPathScheme_ implementation ([UniqueMediaPathScheme.cs](https://github.com/umbraco/Umbraco-CMS/blob/a2a2680defd40ed0ef72fb85bf6d7a9bf1db33bc/src/Umbraco.Core/IO/MediaPathSchemes/UniqueMediaPathScheme.cs#L16C2-L17)) generates the GUID slug by combining the GUID of the media node and the GUID of the property; and in the case of our migrated media, these values will be different.
 
-> You can read Owain's blog, that goes into this issue in further detail, here: https://owainjones.dev/blog/how-a-custom-imediapathscheme-came-to-the-rescue-for-our-migrated-media/
+> You can read Owain's blog, which goes into this issue in further detail, here: https://owainjones.dev/blog/how-a-custom-imediapathscheme-came-to-the-rescue-for-our-migrated-media/
 
-As a workaround, this package includes a custom implementation of _IMediaPathScheme_ ([MigratedUrlRedirectMediaPathScheme.cs](https://method4.visualstudio.com/Umbraco%20-%20Migration%20Package/_git/Method4.UmbracoMigrator.Target?path=/Method4.UmbracoMigrator.Target.Core/MediaPathSchemes/MigratedUrlRedirectMediaPathScheme.cs)), which extends the default _UniqueMediaPathScheme.cs_, and auto-creates a [Skybrud Redirects](https://marketplace.umbraco.com/package/skybrud.umbraco.redirects) redirect in the event that a in-place file replacement is performed on one of the migrated media nodes.
+As a workaround, this package includes a custom implementation of _IMediaPathScheme_ ([MigratedUrlRedirectMediaPathScheme.cs](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/src/Method4.UmbracoMigrator.Target.Core/MediaPathSchemes/MigratedUrlRedirectMediaPathScheme.cs)), which extends the default _UniqueMediaPathScheme.cs_, and auto-creates a [Skybrud Redirects](https://marketplace.umbraco.com/package/skybrud.umbraco.redirects) redirect in the event that a in-place file replacement is performed on one of the migrated media nodes.
 
 >**Note:** The [Skybrud Redirects](https://marketplace.umbraco.com/package/skybrud.umbraco.redirects) package will need to be installed for this to work.
 
@@ -169,4 +169,4 @@ This functionality can be enabled with the following app settings:
 ## 🤔 How do I migrate my DocTypes and MediaTypes?
 That's up to you! This package expects the doctypes to already be in place, it only migrates the data.
 
-The method we use depends on the requirments of the migration, is it just a lift and shift? or a full blown re-build? If it's simply a lift and shift, then we usually use a uSync export to import the old DocTypes onto the new site.
+The method we use depends on the requirements of the migration, is it just a lift and shift? or a full-blown re-build? If it's simply a lift and shift, then we usually use a uSync export to import the old DocTypes onto the new site.
