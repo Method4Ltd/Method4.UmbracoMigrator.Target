@@ -75,7 +75,7 @@ To [install from NuGet](https://www.nuget.org/packages/Method4.UmbracoMigrator.T
 dotnet add package Method4.UmbracoMigrator.Target
 ```
 
-## 📄 [Documentation](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/docs/README.md)
+## 📄 [Documentation](./docs/README.md)
 Documentation can be found in the `/docs` folder, and there are examples of custom mappers on the `/custom_mapper_examples` folder.
 
 ### How do I create a migration snapshot?
@@ -86,15 +86,15 @@ You will need to install the [Method4.UmbracoMigrator.Source](https://github.com
 ## ❤️ Support
 This package was originally created as an internal tool to help us at Method4 perform migrations for our clients, it is being released as open source as we belive the Umbraco community might find it useful.
 
-The package will be updated as and when we need it, feel free to report any bugs/issues you find, contribute by opening a pull request, and we will take a look when we have capacity. Please read the [Contributing Guide](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/docs/CONTRIBUTING.md) for information on how to setup the project locally.
+The package will be updated as and when we need it, feel free to report any bugs/issues you find, contribute by opening a pull request, and we will take a look when we have capacity. Please read the [Contributing Guide](./docs/CONTRIBUTING.md) for information on how to setup the project locally.
 
 ## 🛣️ Roadmap
-Please see the [roadmap](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/docs/ROADMAP.md) for a list of outstanding features and TODOs.
+Please see the [roadmap](./docs/ROADMAP.md) for a list of outstanding features and TODOs.
 
 ## 📝 License
 Copyright &copy; [Method4](https://www.method4.co.uk/).
 
-All source code is licensed under the [Mozilla Public License](../LICENSE).
+All source code is licensed under the [Mozilla Public License](./LICENSE).
 
 ### 🤝 Acknowledgements
 #### Developers
