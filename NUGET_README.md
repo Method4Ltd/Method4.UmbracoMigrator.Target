@@ -6,7 +6,7 @@
 
 Import Migration Snapshots created using the Method4.UmbracoMigrator.Source package.
 
-![A screenshot of the backoffice dashboard](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/dev/docs/images/backofficedashboard.png)
+![A screenshot of the backoffice dashboard](https://raw.githubusercontent.com/Method4Ltd/Method4.UmbracoMigrator.Target/main/docs/images/backofficedashboard.png)
 
 ## Features
 - Repeatable imports
@@ -40,7 +40,7 @@ Import Migration Snapshots created using the Method4.UmbracoMigrator.Source pack
 
 ## Links
 - Repo: https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target
-- Docs: https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/dev/docs
+- Docs: https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/docs/README.md
 
 ## Roadmap
 Please see the [roadmap](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/dev/docs/ROADMAP.md) for a list of outstanding features and TODOs.

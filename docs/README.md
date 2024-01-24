@@ -43,7 +43,7 @@ Custom mappings can be defined using these interfaces, these custom mappings wil
 - If the property editor type has changed and you need to do a manual conversion.
 - If you need to manually modify a value for some other reason.
 
-Examples of custom mappers can be found in the sample site, and here: https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/dev/custom_mapper_examples/
+Examples of custom mappers can be found in the sample site, and in the `/docs/custom_mapper_examples/` folder: https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/tree/main/docs/custom_mapper_examples
 
 ## ⚒️ IDocTypeMapping - `Method4.UmbracoMigrator.Target.Core.Mappers`
 ### Properties:
