@@ -9,23 +9,23 @@
 ## What is the Method4.UmbracoMigrator?
 The Method4 Umbraco Migrator allows migrating content and media from an Umbraco v7/v8 site to an Umbraco 10+ site.
 
-This tool was originally created as an intenral tool, for us at Method4, to make migrating our client's Umbraco sites easy. We've decided to make it available as an open source package as we belive other devs in the Umbraco community may find it useful too.
+This tool was originally created as an internal tool for us at Method4, to make migrating our client's Umbraco sites easy, and we've decided to make it available as an open-source package; as we believe other devs in the Umbraco community may find it useful too.
 
-Read our blog post about this tool here:
+Read our blog post about this tool here: [TODO insert link]
 
 The migrator tool consists of 2 packages, _Method4.UmbracoMigrator.Source_ and _Method4.UmbracoMigrator.Target_.
 
 ### 📤 [Method4.UmbracoMigrator.Source](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Source)
 Generates the Migration Snapshot .zip files that will be imported into your shiny new 10+ site!
 
-### 📥 Method4.UmbracoMigrator.Target
+### 📥 [Method4.UmbracoMigrator.Target](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target)
 Imports the migration snapshots and runs mappers to transform the data.
 
 The Target package ships with built-in default mappers that perform "lazy" mappings, e.g. if an old Node's DocType matches one of our new DocTypes it will attempt to map it, and if any of its properties have identical aliases, then their raw values be copied across.
 
-- Migrate a node if it's old DocType alias matches one of the new DocType aliases
-- Migrate a property if it's old alias matches one of the new property aliases
-     - The raw property value will be copied accross
+- Migrate a node if its old DocType alias matches one of the new DocType aliases
+- Migrate a property if its old alias matches one of the new property aliases
+     - The raw property value will be copied across
      - it will also attempt to convert the format if the new data type has been updated to a new version
           - E.g. MediaPicker (legacy)  can be converted to the new MediPicker 3's format
     
@@ -78,7 +78,7 @@ dotnet add package Method4.UmbracoMigrator.Target
 ```
 
 ## 📄 [Documentation](./docs/README.md)
-Documentation can be found in the `/docs` folder, and there are examples of custom mappers on the `/custom_mapper_examples` folder.
+Documentation can be found in the `/docs` folder, and there are examples of custom mappers in the `/custom_mapper_examples` folder.
 
 ### How do I create a migration snapshot?
 You will need to install the [Method4.UmbracoMigrator.Source](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Source) package onto your source website, to generate the snapshots.
@@ -86,9 +86,9 @@ You will need to install the [Method4.UmbracoMigrator.Source](https://github.com
 ![Diagram showing a snapshot export from a va8 to v13 site](./docs/images/Snapshot_diagram.png)
 
 ## ❤️ Support
-This package was originally created as an internal tool to help us at Method4 perform migrations for our clients, it is being released as open source as we belive the Umbraco community might find it useful.
+This package was originally created as an internal tool for us at Method4, to make migrating our client's Umbraco sites easy, and we've decided to make it available as an open-source package; as we believe other devs in the Umbraco community may find it useful too.
 
-The package will be updated as and when we need it, feel free to report any bugs/issues you find, contribute by opening a pull request, and we will take a look when we have capacity. Please read the [Contributing Guide](./docs/CONTRIBUTING.md) for information on how to setup the project locally.
+The package will be updated as and when we need it, feel free to report any bugs/issues you find, contribute by opening a pull request, and we will take a look when we have capacity. Please read the [Contributing Guide](./docs/CONTRIBUTING.md) for information on how to set up the project locally.
 
 ## 🛣️ Roadmap
 Please see the [roadmap](./docs/ROADMAP.md) for a list of outstanding features and TODOs.

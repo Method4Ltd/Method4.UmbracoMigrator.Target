@@ -6,7 +6,7 @@
 
 Import Migration Snapshots created using the Method4.UmbracoMigrator.Source package.
 
-![A screenshot of the backoffice dashboard](https://raw.githubusercontent.com/Method4Ltd/Method4.UmbracoMigrator.Target/main/docs/images/backofficedashboard.png)
+![A screenshot of the backoffice dashboard](https://raw.githubusercontent.com/Method4Ltd/Method4.UmbracoMigrator.Target/v10/main/docs/images/backofficedashboard.png)
 
 ## Features
 - Repeatable imports
