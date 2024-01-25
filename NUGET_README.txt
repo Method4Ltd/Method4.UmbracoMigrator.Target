@@ -9,6 +9,6 @@
     Import Migration Snapshots created using the Method4.UmbracoMigrator.Source package.
 
     Repo    : https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target
-    Docs    : https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/docs/README.md
+    Docs    : https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/v10/main/docs/README.md
 
     🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚 Method4.UmbracoMigrator.Target 🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚🚚

@@ -98,12 +98,12 @@ Copyright &copy; [Method4](https://www.method4.co.uk/).
 
 All source code is licensed under the [Mozilla Public License](./LICENSE).
 
-### 🤝 Acknowledgements
-#### Developers
+## 🤝 Acknowledgements
+### Developers
 
 - [Owain Jones](https://owainjones.dev) - ([GitHub](https://github.com/OwainJ), [Mastodon](https://umbracocommunity.social/@ojodev), [Twitter](https://twitter.com/The_DarkGhost))
 
-#### Logo
+### Logo
 The package logo uses the [Local Shipping](https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Alocal_shipping%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4024) icon from [Google Fonts](https://fonts.google.com/icons), licensed under [SIL Open Font License](https://openfontlicense.org/).
 
 ## 🙌 Alternatives

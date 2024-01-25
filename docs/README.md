@@ -146,7 +146,7 @@ This is due to the fact that the default Umbraco _IMediaPathScheme_ implementati
 
 > You can read Owain's blog, which goes into this issue in further detail, here: https://owainjones.dev/blog/how-a-custom-imediapathscheme-came-to-the-rescue-for-our-migrated-media/
 
-As a workaround, this package includes a custom implementation of _IMediaPathScheme_ ([MigratedUrlRedirectMediaPathScheme.cs](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/main/src/Method4.UmbracoMigrator.Target.Core/MediaPathSchemes/MigratedUrlRedirectMediaPathScheme.cs)), which extends the default _UniqueMediaPathScheme.cs_, and auto-creates a [Skybrud Redirects](https://marketplace.umbraco.com/package/skybrud.umbraco.redirects) redirect in the event that a in-place file replacement is performed on one of the migrated media nodes.
+As a workaround, this package includes a custom implementation of _IMediaPathScheme_ ([MigratedUrlRedirectMediaPathScheme.cs](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/v10/main/src/Method4.UmbracoMigrator.Target.Core/MediaPathSchemes/MigratedUrlRedirectMediaPathScheme.cs)), which extends the default _UniqueMediaPathScheme.cs_, and auto-creates a [Skybrud Redirects](https://marketplace.umbraco.com/package/skybrud.umbraco.redirects) redirect in the event that a in-place file replacement is performed on one of the migrated media nodes.
 
 >**Note:** The [Skybrud Redirects](https://marketplace.umbraco.com/package/skybrud.umbraco.redirects) package will need to be installed for this to work.
 
