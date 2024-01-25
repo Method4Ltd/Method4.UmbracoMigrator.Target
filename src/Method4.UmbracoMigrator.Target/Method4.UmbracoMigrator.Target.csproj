@@ -10,12 +10,12 @@
 		<Description>Import migration snapshots, created with Method4.UmbracoMigrator.Source, into Umbraco 10+</Description>
 		<Product>Method4.UmbracoMigrator.Target</Product>
 		<PackageTags>umbraco plugin package content migration</PackageTags>
-		<Authors>Owain Jones</Authors>
+		<Authors>Method4 Ltd</Authors>
 		<Company>Method4 Ltd</Company>
 		<Copyright>Method4 ©️ 2024</Copyright>
 		<PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
-		<PackageProjectUrl></PackageProjectUrl>
-		<RepositoryUrl></RepositoryUrl>
+		<PackageProjectUrl>https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>NUGET_README.md</PackageReadmeFile>
 		<PackageIcon>UmbracoMigratorTarget_Logo.png</PackageIcon>
@@ -47,14 +47,10 @@
 		<EmbeddedResource Remove="node_modules\**" />
 		<None Remove="node_modules\**" />
 	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="App_Plugins\Method4UmbracoMigratorTarget\backoffice\scripts\directives\relationLookup.directive.js" />
-	  <None Remove="App_Plugins\Method4UmbracoMigratorTarget\backoffice\views\directives\relationLookup.html" />
-	</ItemGroup>
 
 	<!-- Include assets for NuGet -->
 	<ItemGroup>
-		<Content Include="../../docs/UmbracoMigratorTarget_Logo.png" Pack="true" PackagePath="\" />
+		<Content Include="../../docs/images/UmbracoMigratorTarget_Logo.png" Pack="true" PackagePath="\" />
 		<None Include="../../NUGET_README.txt" Pack="true" PackagePath="\" />
 		<None Include="../../NUGET_README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>

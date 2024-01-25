@@ -11,12 +11,12 @@
 		<Title>Method4.UmbracoMigrator.Target.Core</Title>
 		<Description>Core package for Method4.UmbracoMigrator.Target</Description>
 		<Product>Method4.UmbracoMigrator.Target</Product>
-		<Authors>Owain Jones</Authors>
+		<Authors>Method4 Ltd</Authors>
 		<Company>Method4 Ltd</Company>
 		<Copyright>Method4 ©️ 2024</Copyright>
-		<PackageLicenseExpression>MIT or MPL-2.0 ??????????????</PackageLicenseExpression>
-		<PackageProjectUrl></PackageProjectUrl>
-		<RepositoryUrl></RepositoryUrl>
+		<PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
