@@ -59,6 +59,9 @@
 
     .migrator-dashboard .snapshot-file-previews {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-end;
         gap: 10px;
     }
 
