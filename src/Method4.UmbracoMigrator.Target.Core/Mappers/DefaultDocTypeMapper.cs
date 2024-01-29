@@ -120,15 +120,41 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
                         catch (Exception ex)
                         {
                             _logger.LogError(ex, "Failed to convert property {propertyAlias}, on node {nodeId} [{nodeKey}], from {oldPropertyEditorAlias} to {newPropertyEditorAlias} format. Value: {value}",
-                                oldProperty.Alias, newNode.Id, newNode.Key, newProperty.PropertyType.PropertyEditorAlias, oldProperty.PropertyEditorAlias, value);
-                            throw new Exception($"Failed to convert property {oldProperty.Alias}, on node {newNode.Id} [{newNode.Key}], from {newProperty.PropertyType.PropertyEditorAlias} to {oldProperty.PropertyEditorAlias} format. Value: {value}", ex);
+                                oldProperty.Alias, newNode.Id, newNode.Key, oldProperty.PropertyEditorAlias, newProperty.PropertyType.PropertyEditorAlias, value);
+                            throw new Exception($"Failed to convert property {oldProperty.Alias}, on node {newNode.Id} [{newNode.Key}], from {oldProperty.PropertyEditorAlias} to {newProperty.PropertyType.PropertyEditorAlias} format. Value: {value}", ex);
                         }
                     }
 
-                    // If it's an RTE, cleanse it just in case the macros have been rendered
+                    // If it's an RTE, we need to cleanse it, just in case the macros have been rendered inline.
                     if (oldProperty.PropertyEditorAlias == Constants.PropertyEditors.Aliases.TinyMce)
                     {
-                        value = MacroTagParser.FormatRichTextContentForPersistence(value!);
+                        // NOTE: There's an issue in Umbraco where RTEs in the old grid can, under certain circumstances, have their Macros rendered inline in the db...
+                        //
+                        // The Macro in the RTE value should be like this:
+                        //  <?UMBRACO_MACRO macroAlias="MyMacro" dataMyProperty="This is a Macro" />
+                        //
+                        // But, can instead be rendered inline like this:
+                        //<div class="umb-macro-holder MyMacro umb-macro-mce_3 mceNonEditable">
+                        //      <!-- <?UMBRACO_MACRO macroAlias="MyMacro" dataMyProperty="This is a Macro" /> -->
+                        //      <ins>
+                        //           <div>
+                        //                ...
+                        //           </div>
+                        //      </ins>
+                        // </div>
+                        //
+                        // Passing it through Umbraco's FormatRichTextContentForPersistence() method should fix this.
+                        try
+                        {
+                            // Try catch as this will throw if the Macro comment is at the root of the document
+                            value = MacroTagParser.FormatRichTextContentForPersistence(value!);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Failed to Format Rich Text Content For Persistence on property {propertyAlias}, for node {nodeId} [{nodeKey}]. Macros may not render correctly.",
+                                oldProperty.Alias, newNode.Id, newNode.Key);
+                            throw;
+                        }
                     }
 
                     try
