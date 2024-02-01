@@ -87,27 +87,32 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
                     var newNodeVaries = contentType?.VariesByCulture() == true;
                     var oldNodeVaries = migrationContent.VariesByCulture;
 
-                    foreach (var publishedStatus in migrationContent.PublishedStatus)
+                    if (oldNodeVaries)
                     {
-                        if (publishedStatus.Published == false) { continue; }
-
-                        if (newNodeVaries)
+                        var publishedCultures = new List<string>();
+                        // Loop through the old node's published statuses
+                        foreach (var publishedStatus in migrationContent.PublishedStatus)
                         {
-                            switch (oldNodeVaries)
+                            if (publishedStatus.Published == false) { continue; }
+
+                            switch (newNodeVaries)
                             {
                                 // Skip default if we have variants
-                                case true when publishedStatus.Culture != "default":
-                                case false when publishedStatus.Culture == "default":
-                                    PublishContent((Guid)newKey, publishedStatus.Culture);
+                                case true when publishedStatus.Culture != "default": // if new node varies, only add cultures
+                                case false when publishedStatus.Culture == "default": // if new node doesn't vary, only add default
+                                    publishedCultures.Add(publishedStatus.Culture);
                                     break;
                             }
                         }
-                        else
+                        PublishContent((Guid)newKey, publishedCultures.ToArray());
+                    }
+                    else
+                    {
+                        // If the old node doesn't vary by culture, then we'll just publish the default culture
+                        var publishedStatus = migrationContent.PublishedStatus.FirstOrDefault(x => x.Culture == "default");
+                        if (publishedStatus != null && publishedStatus.Published)
                         {
-                            if (publishedStatus.Culture == "default")
-                            {
-                                PublishContent((Guid)newKey, publishedStatus.Culture);
-                            }
+                            PublishContent((Guid)newKey, "default");
                         }
                     }
                 }
@@ -151,19 +156,49 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
             _logger.LogInformation("Completed Migration Phase 4");
         }
 
+        /// <summary>
+        /// Publish the node.
+        /// A culture value of "default" will result in all cultures being published.
+        /// </summary>
+        /// <param name="contentKey"></param>
+        /// <param name="culture"></param>
         private void PublishContent(Guid contentKey, string culture)
         {
+            PublishContent(contentKey, new[] { culture });
+        }
+
+        /// <summary>
+        /// Publish the node.
+        /// A culture value of "default" will result in all cultures being published.
+        /// </summary>
+        /// <param name="contentKey"></param>
+        /// <param name="cultures"></param>
+        private void PublishContent(Guid contentKey, string[] cultures)
+        {
+            var culturesString = string.Join(",", cultures);
             var contentNode = _contentService.GetById(contentKey);
             if (contentNode == null)
             {
-                _logger.LogWarning("Could not publish the {culture} variant of content node {key}, as it could not be found.", culture, contentKey);
+                _hubService.SendMessage(4, $"Could not publish content node \"{contentKey}\", as it could not be found.");
+                _logger.LogWarning("Could not publish the \"{cultures}\" variant(s) of content node {key}, as it could not be found.", culturesString, contentKey);
                 return;
             }
 
-            var result = _contentService.SaveAndPublish(contentNode, (culture == "default" ? "*" : culture));
+            PublishResult result;
+            if (cultures.Length == 1)
+            {
+                var culture = cultures.First();
+                result = _contentService.SaveAndPublish(contentNode, (culture == "default" ? "*" : culture));
+            }
+            else
+            {
+                result = _contentService.SaveAndPublish(contentNode, cultures);
+            }
+
             if (result?.Success == false)
             {
-                _logger.LogError("Failed to publish the {culture} variant of content node {id}.", culture, contentNode.Id);
+                _hubService.SendMessage(4, $"Failed to publish content node \"{contentNode.Id}\" - \"{result.Result}\"");
+                _logger.LogError("Failed to publish the \"{cultures}\" variant of content node \"{id}\". {result}", culturesString, contentNode.Id, result.Result);
             }
         }
 
@@ -177,14 +212,16 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
             var contentNode = _contentService.GetById(contentKey);
             if (contentNode == null)
             {
-                _logger.LogWarning("Could not trash content node {key}, as it could not be found.", contentKey);
+                _hubService.SendMessage(4, $"Failed to trash content node \"{contentKey}\", as it could not be found.");
+                _logger.LogWarning("Could not trash content node \"{key}\", as it could not be found.", contentKey);
                 return;
             }
 
             var result = _contentService.MoveToRecycleBin(contentNode);
             if (result?.Success == false)
             {
-                _logger.LogError("Failed to trash content node {id}.", contentNode.Id);
+                _hubService.SendMessage(4, $"Failed to trash content node \"{contentNode.Id}\" - \"{result.Result}\"");
+                _logger.LogError("Failed to trash content node \"{id}\". {result}", contentNode.Id, result.Result);
             }
         }
 
@@ -193,14 +230,16 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
             var mediaNode = _mediaService.GetById(contentKey);
             if (mediaNode == null)
             {
-                _logger.LogWarning("Could not trash media node {key}, as it could not be found.", contentKey);
+                _hubService.SendMessage(4, $"Failed to trash media node \"{contentKey}\", as it could not be found.");
+                _logger.LogWarning("Could not trash media node \"{key}\", as it could not be found.", contentKey);
                 return;
             }
 
             var result = _mediaService.MoveToRecycleBin(mediaNode);
             if (result.Success == false)
             {
-                _logger.LogError("Failed to trash media node {id}. {excemptionMessage}", mediaNode.Id, result.Exception?.Message);
+                _hubService.SendMessage(4, $"Failed to trash media node \"{mediaNode.Name.Truncate()}\" - \"{result.Result}\"");
+                _logger.LogError(result.Exception, "Failed to trash media node \"{id}\". {result}", mediaNode.Id, result.Result);
             }
         }
 
@@ -209,6 +248,7 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
             var contentNode = _contentService.GetById(contentKey);
             if (contentNode == null)
             {
+                _hubService.SendMessage(4, $"Could not set Public Access on content node \"{contentKey}\", as it could not be found.");
                 _logger.LogWarning("Could not set Public Access on content node {key}, as it could not be found.", contentKey);
                 return;
             }
@@ -245,6 +285,7 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
 
             if (loginNode == null)
             {
+                _hubService.SendMessage(4, $"Skipping Public Access Entry for node \"{contentNode.Id}\", as the selected Login node is null");
                 _logger.LogError("Skipping Public Access Entry for node {nodeId} [{nodeKey}], as the selected Login node is null", contentNode.Id, contentKey);
                 return;
             }
@@ -266,6 +307,7 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
 
             if (noAccessNode == null)
             {
+                _hubService.SendMessage(4, $"Skipping Public Access Entry for node \"{contentNode.Id}\", as the selected No Access node is null");
                 _logger.LogError("Skipping Public Access Entry for node {nodeId} [{nodeKey}], as the selected No Access node is null", contentNode.Id, contentKey);
                 return;
             }
@@ -293,6 +335,7 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
             }
             catch (Exception ex)
             {
+                _hubService.SendMessage(4, $"Failed to save Public Access entry for node \"{contentNode.Id}\"");
                 _logger.LogError(ex, "Failed to save Public Access entry for node {nodeId} [{nodeKey}]", contentNode.Id, contentKey);
             }
         }
