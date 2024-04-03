@@ -24,7 +24,7 @@
 	<ItemGroup>
 		<PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
 		<PackageReference Include="Skybrud.Umbraco.Redirects" Version="[4.0.17,4.999)" />
-		<PackageReference Include="Umbraco.Cms.Core" Version="10.4.0" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="[10.0.0,12.999)" />
 		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[10.0.0,12.999)" />
 		<PackageReference Include="Umbraco.Cms.Web.Common" Version="[10.0.0,12.999)" />
 	</ItemGroup>
