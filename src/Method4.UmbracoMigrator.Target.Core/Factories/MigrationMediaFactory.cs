@@ -1,6 +1,7 @@
 ﻿using Method4.UmbracoMigrator.Target.Core.Models.MigrationModels;
 using Microsoft.Extensions.Logging;
 using System.Xml.Linq;
+using Umbraco.Extensions;
 
 namespace Method4.UmbracoMigrator.Target.Core.Factories
 {
@@ -37,7 +38,7 @@ namespace Method4.UmbracoMigrator.Target.Core.Factories
             int sortOrder;
             List<MigrationProperty> properties;
 
-            /// Get node info (no try parse as any fail here we want to just throw)
+            // Get node info (no try parse as any fail here we want to just throw)
             key = Guid.Parse(mediaElement.Attribute("Key")!.Value);
             id = mediaElement.Attribute("Id")!.Value;
             name = mediaElement.Attribute("Name")!.Value;
@@ -53,7 +54,14 @@ namespace Method4.UmbracoMigrator.Target.Core.Factories
             var nodeNameElement = infoElement.Element("NodeName");
             nodeNames.Add(new MigrationNodeName("default", nodeNameElement!.Attribute("Default")!.Value));
 
-            /// Get properties
+            // Get the parent key from the Trashed attribute, if the node is trashed
+            var trashedParentKey = infoElement!.Element("Trashed")!.Attribute("Parent")?.Value;
+            if (trashed && trashedParentKey.IsNullOrWhiteSpace() == false)
+            {
+                parentKey = Guid.Parse(trashedParentKey!);
+            }
+
+            // Get properties
             var xmlProperties = mediaElement.Element("Properties")!.Elements();
             properties = GetProperties(xmlProperties);
 

@@ -6,7 +6,6 @@ using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Infrastructure.Macros;
 using Umbraco.Extensions;
-using static Umbraco.Cms.Core.Collections.TopoGraph;
 
 namespace Method4.UmbracoMigrator.Target.Core.Mappers
 {
@@ -186,8 +185,6 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
                 ? _contentService.Create(oldNode.Name, -1, contentTypeAlias)
                 : _contentService.Create(oldNode.Name, (Guid)parentKey, contentTypeAlias);
 
-
-
             newNode.SortOrder = oldNode.SortOrder;
 
             // Save default Name or variant names
@@ -216,6 +213,12 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
                         newNode.SetCultureName(oldNode.Name, oldDefaultCulture);
                     }
                 }
+            }
+
+            // Set the default template
+            if (contentType?.DefaultTemplate?.Id != null)
+            {
+                newNode.TemplateId = contentType.DefaultTemplate.Id;
             }
 
             return newNode;

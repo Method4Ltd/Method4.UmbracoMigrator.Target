@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Method4.UmbracoMigrator.Target.Core.Models.DataModels;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Extensions;
 
 namespace Method4.UmbracoMigrator.Target.Core.Helpers
@@ -98,32 +100,36 @@ namespace Method4.UmbracoMigrator.Target.Core.Helpers
         private string TransformMediaPicker3(string oldValue) // Old value format: "{"key":"9f224bee-5a9d-4818-8376-656d08c050b4","mediaKey":"8ac2c7bc-0acb-488e-a4e6-24d9ea5bdff7"}"
         {
             var newPickedMedia = new List<dynamic>();
-            var oldPickedMedias = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(oldValue) ?? new List<Dictionary<string, string>>();
+            var oldPickedMedias = JsonSerializer.Deserialize<List<MediaWithCropsDto>>(oldValue) ?? new List<MediaWithCropsDto>();
 
             foreach (var oldPickedMedia in oldPickedMedias)
             {
-                oldPickedMedia.TryGetValue("mediaKey", out var oldKeyString);
-
-                var parseResult = Guid.TryParse(oldKeyString, out Guid oldKey);
-                if (parseResult == false)
-                {
-                    _logger.LogWarning("Failed to parse Key in MediaPicker value: {oldValue}", oldValue);
-                    return oldValue;
-                }
-
+                var oldKey = oldPickedMedia.MediaKey;
                 var relation = _relationLookupService.GetRelationByOldKey(oldKey);
-                var newKey = relation?.NewKeyAsGuid;
-                if (newKey == null)
+                if (relation == null)
                 {
                     _logger.LogError("Could not find key lookup for {oldKey}", oldKey);
                     return oldValue;
                 }
 
-                newPickedMedia.Add(new
+                if (oldPickedMedia.Crops?.Any() == true)
                 {
-                    key = Guid.NewGuid().ToString(),
-                    mediaKey = newKey.ToString(),
-                });
+                    newPickedMedia.Add(new
+                    {
+                        key = Guid.NewGuid().ToString(),
+                        mediaKey = relation.NewKeyAsString,
+                        crops = oldPickedMedia.Crops,
+                        focalPoint = oldPickedMedia.FocalPoint
+                    });
+                }
+                else
+                {
+                    newPickedMedia.Add(new
+                    {
+                        key = Guid.NewGuid().ToString(),
+                        mediaKey = relation.NewKeyAsString,
+                    });
+                }
             }
 
             return JsonSerializer.Serialize(newPickedMedia);

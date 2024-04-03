@@ -43,7 +43,7 @@ namespace Method4.UmbracoMigrator.Target.Core.Factories
             MigrationPublicAccess? publicAccess;
             var availableCultures = new List<string>();
 
-            /// Get node info (no try parse as any fail here we want to just throw)
+            // Get node info (no try parse as any fail here we want to just throw)
             key = Guid.Parse(contentElement.Attribute("Key")!.Value);
             id = contentElement.Attribute("Id")!.Value;
             name = contentElement.Attribute("Name")!.Value;
@@ -56,11 +56,18 @@ namespace Method4.UmbracoMigrator.Target.Core.Factories
             createDate = DateTime.Parse(infoElement.Element("CreateDate")!.Value);
             sortOrder = int.Parse(infoElement.Element("SortOrder")!.Value);
 
+            // Get the parent key from the Trashed attribute, if the node is trashed
+            var trashedParentKey = infoElement!.Element("Trashed")!.Attribute("Parent")?.Value;
+            if (trashed && trashedParentKey.IsNullOrWhiteSpace() == false)
+            {
+                parentKey = Guid.Parse(trashedParentKey!);
+            }
+
             // Get available cultures
             var availableCulturesString = contentElement.Attribute("AvailableCultures")?.Value;
-            if (!availableCulturesString.IsNullOrWhiteSpace())
+            if (availableCulturesString.IsNullOrWhiteSpace() == false)
             {
-                availableCultures = availableCulturesString.Split(',').ToList();
+                availableCultures = availableCulturesString!.Split(',').ToList();
             }
 
             // Get Default Node Name
