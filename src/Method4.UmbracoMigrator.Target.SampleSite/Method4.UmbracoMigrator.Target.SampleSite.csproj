@@ -1,47 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <ItemGroup>
-    <Content Include="App_Plugins\Method4UmbracoMigratorTarget\backoffice\migratorTarget\dashboard.html" />
-    <Content Include="App_Plugins\Method4UmbracoMigratorTarget\backoffice\styles\main.css" />
-    <Content Include="App_Plugins\Method4UmbracoMigratorTarget\lang\en-US.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App_Plugins\Method4UmbracoMigratorTarget\backoffice\scripts\controllers\dashboard.controller.js" />
-    <None Include="App_Plugins\Method4UmbracoMigratorTarget\backoffice\scripts\services\migrator.service.js" />
-    <None Include="App_Plugins\Method4UmbracoMigratorTarget\backoffice\scripts\startup.module.js" />
-    <None Include="App_Plugins\Method4UmbracoMigratorTarget\package.manifest" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Clean" Version="2.1.6" />
-    <PackageReference Include="Skybrud.Umbraco.Redirects" Version="4.0.17" />
-    <PackageReference Include="Umbraco.Cms" Version="10.4.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Clean" Version="4.0.0" />
+		<PackageReference Include="Skybrud.Umbraco.Redirects" Version="13.0.4" />
+		<PackageReference Include="Umbraco.Cms" Version="13.3.0" />
+		<PackageReference Include="uSync" Version="13.2.1" />
+		<PackageReference Include="Umbraco.StorageProviders.AzureBlob" Version="13.0.1" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\Method4.UmbracoMigrator.Target.Core\Method4.UmbracoMigrator.Target.Core.csproj" />
+		<ProjectReference Include="..\Method4.UmbracoMigrator.Target\Method4.UmbracoMigrator.Target.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
-    <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
-    <PackageReference Include="Umbraco.StorageProviders.AzureBlob" Version="10.0.0" />
-    <PackageReference Include="uSync" Version="10.3.2" />
-    <ProjectReference Include="..\Method4.UmbracoMigrator.Target.Core\Method4.UmbracoMigrator.Target.Core.csproj" />
-    <ProjectReference Include="..\Method4.UmbracoMigrator.Target\Method4.UmbracoMigrator.Target.csproj" />
-    <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2.0.9" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
-  </ItemGroup>
+	<ItemGroup>
+		<!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
+		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
+		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Content Include="App_Plugins\**" />
+	</ItemGroup>
 
-  <PropertyGroup>
-    <!-- Razor files are needed for the backoffice to work correctly -->
-    <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
-  </PropertyGroup>
+	<PropertyGroup>
+		<!-- Razor files are needed for the backoffice to work correctly -->
+		<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <!-- Remove RazorCompileOnBuild and RazorCompileOnPublish when not using ModelsMode InMemoryAuto -->
-    <RazorCompileOnBuild>false</RazorCompileOnBuild>
-    <RazorCompileOnPublish>false</RazorCompileOnPublish>
-    <UserSecretsId>6d883d23-8237-4957-8642-a9748e72688d</UserSecretsId>
-  </PropertyGroup>
-  
+	<PropertyGroup>
+		<!-- Remove RazorCompileOnBuild and RazorCompileOnPublish when not using ModelsMode InMemoryAuto -->
+		<RazorCompileOnBuild>false</RazorCompileOnBuild>
+		<RazorCompileOnPublish>false</RazorCompileOnPublish>
+		<UserSecretsId>6d883d23-8237-4957-8642-a9748e72688d</UserSecretsId>
+	</PropertyGroup>
+
 </Project>

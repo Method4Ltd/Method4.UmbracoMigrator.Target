@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 	</PropertyGroup>
 
 	<!-- Information for the NuGet package -->
@@ -24,9 +24,9 @@
 	<!-- Include NuGet dependencies -->
 	<ItemGroup>
 		<ProjectReference Include="..\Method4.UmbracoMigrator.Target.Core\Method4.UmbracoMigrator.Target.Core.csproj" />
-		<PackageReference Include="Umbraco.Cms.Core" Version="[10.0.0,12.999)" />
-		<PackageReference Include="Umbraco.Cms.Web.Website" Version="[10.0.0,12.999)" />
-		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[10.0.0,12.999)" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="[13.0.0,13.999)" />
+		<PackageReference Include="Umbraco.Cms.Web.Website" Version="[13.0.0,13.999)" />
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[13.0.0,13.999)" />
 	</ItemGroup>
 
 	<!-- Include our backoffice assets -->
