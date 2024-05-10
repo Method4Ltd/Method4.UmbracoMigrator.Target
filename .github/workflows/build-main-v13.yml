@@ -21,6 +21,6 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src/Method4.UmbracoMigrator.Target.sln
     - name: Build
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build src/Method4.UmbracoMigrator.Target.sln --no-restore --configuration Release
