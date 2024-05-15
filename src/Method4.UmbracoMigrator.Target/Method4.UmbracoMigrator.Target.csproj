@@ -9,7 +9,7 @@
 		<Title>Method4.UmbracoMigrator.Target</Title>
 		<Description>Import migration snapshots, created with Method4.UmbracoMigrator.Source, into Umbraco 10+</Description>
 		<Product>Method4.UmbracoMigrator.Target</Product>
-		<PackageTags>umbraco plugin package content migration</PackageTags>
+		<PackageTags>umbraco plugin package umbraco-marketplace content migration</PackageTags>
 		<Authors>Method4 Ltd</Authors>
 		<Company>Method4 Ltd</Company>
 		<Copyright>Method4 ©️ 2024</Copyright>
