@@ -6,7 +6,7 @@ name: v13 Main - Pre-release
 on:
   push:
     tags:
-    - "v13.[0-9]+.[0-9]+-[a-z]*[0-9][0-9][0-9]"
+    - "v13.[0-9]+.[0-9]+-[a-z]*[0-9]+"
 
 jobs:
   build:
