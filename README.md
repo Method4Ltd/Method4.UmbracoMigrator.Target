@@ -11,9 +11,7 @@ The Method4 Umbraco Migrator allows migrating content and media from an Umbraco 
 
 This tool was originally created as an internal tool for us at Method4, to make migrating our client's Umbraco sites easy, and we've decided to make it available as an open-source package; as we believe other devs in the Umbraco community may find it useful too.
 
-Read our blog post about this tool here: [TODO insert link]
-
-The migrator tool consists of 2 packages, _Method4.UmbracoMigrator.Source_ and _Method4.UmbracoMigrator.Target_.
+The migrator tool consists of 2 packages:
 
 ### 📤 [Method4.UmbracoMigrator.Source](https://github.com/Method4Ltd/Method4.UmbracoMigrator.Source)
 Generates the Migration Snapshot .zip files that will be imported into your shiny new 10+ site!
