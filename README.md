@@ -2,12 +2,12 @@
 
 # Method4.UmbracoMigrator.Target
 [![Mozilla Public License](https://img.shields.io/badge/MPL--2.0-orange?label=license)](https://opensource.org/licenses/MPL-2) 
-[![Latest version](https://img.shields.io/nuget/v/Method4.UmbracoMigrator.Target?label=version)](https://marketplace.umbraco.com/package/method4.umbracomigrator.target) 
+[![Latest version](https://img.shields.io/nuget/v/Method4.UmbracoMigrator.Target?label=nuget)](https://www.nuget.org/packages/Method4.UmbracoMigrator.Target) 
 [![NuGet download count](https://img.shields.io/nuget/dt/Method4.UmbracoMigrator.Target?label=downloads)](https://www.nuget.org/packages/Method4.UmbracoMigrator.Target)
 [![Umbraco Marketplace](https://img.shields.io/badge/umbraco-marketplace-%233544B1)](https://marketplace.umbraco.com/package/method4.umbracomigrator.target)
 
 ## What is the Method4.UmbracoMigrator?
-The Method4 Umbraco Migrator allows migrating content and media from an Umbraco v7/v8 site to an Umbraco 10+ site.
+The Method4 Umbraco Migrator allows migrating content and media from an Umbraco v7/v8 site to an Umbraco v10+ site.
 
 This tool was originally created as an internal tool for us at Method4, to make migrating our client's Umbraco sites easy, and we've decided to make it available as an open-source package; as we believe other devs in the Umbraco community may find it useful too.
 
