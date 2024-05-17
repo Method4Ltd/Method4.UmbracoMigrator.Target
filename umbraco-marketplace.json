@@ -9,7 +9,7 @@
     },
     "Category": "Developer Tools",
     "Description": "Import Migration Snapshots created using the Method4.UmbracoMigrator.Source package.",
-    "DocumentationUrl": "https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/v10/main/docs",
+    "DocumentationUrl": "https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/blob/v13/main/docs",
     "LicenseTypes": [ "Free" ],
     "IssueTrackerUrl": "https://github.com/Method4Ltd/Method4.UmbracoMigrator.Target/issues",
     "PackageType": "Package",
