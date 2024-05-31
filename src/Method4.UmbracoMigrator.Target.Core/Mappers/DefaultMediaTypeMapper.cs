@@ -24,11 +24,11 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
             _logger = logger;
         }
 
-        public bool CanIMap(MigrationMedia MigrationNode)
+        public bool CanIMap(MigrationMedia migrationNode)
         {
             // Look for a Content Type that has the same alias/name as the old one
             var contentTypeAliases = _contentTypeService.GetAllContentTypeAliases();
-            var contentTypeMatch = contentTypeAliases.Contains(MigrationNode.ContentType);
+            var contentTypeMatch = contentTypeAliases.Contains(migrationNode.ContentType);
             return contentTypeMatch;
         }
 
@@ -46,7 +46,7 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
             return newNode;
         }
 
-        public IMedia MapNode(MigrationMedia oldNode, IMedia newNode, bool overwiteExisitingValues)
+        public IMedia MapNode(MigrationMedia oldNode, IMedia newNode, bool overwriteExistingValues)
         {
             // Map the default umbraco properties
             newNode.CreateDate = oldNode.CreateDate;
@@ -60,7 +60,7 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
                 var newProperty = newNode.Properties.First(x => x.Alias == oldProperty.Alias);
                 var hasValue = (newProperty.GetValue()?.ToString() ?? "").IsNullOrWhiteSpace() == false;
 
-                if (hasValue && overwiteExisitingValues == false) { continue; }
+                if (hasValue && overwriteExistingValues == false) { continue; }
 
                 // Media cannot vary by culture, every value will be "default"
                 var value = oldProperty.GetDefaultValue;

@@ -34,6 +34,21 @@
             PublicAccess = publicAccess;
             AvailableCultures = availableCultures;
         }
+
+        /// <summary>
+        /// Returns the default culture of this old node
+        /// </summary>
+        /// <returns></returns>
+        public string? GetDefaultCulture()
+        {
+            if (VariesByCulture == false)
+            {
+                return AvailableCultures.FirstOrDefault();
+            }
+
+            var defaultName = NodeNames.FirstOrDefault(x => x.Name == Name && x.Culture != "default");
+            return defaultName?.Culture;
+        }
     }
 
     public class MigrationPublishStatus
