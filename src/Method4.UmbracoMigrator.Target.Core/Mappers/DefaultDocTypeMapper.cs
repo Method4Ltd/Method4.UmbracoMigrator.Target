@@ -20,11 +20,11 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
 
         //private bool hasCultures;
 
-        public DefaultDocTypeMapper(IContentTypeService contentTypeService, 
-            IContentService contentService, 
-            IKeyTransformer keyTransformer, 
-            IPropertyEditorConverter propertyEditorConverter, 
-            ILocalizationService localizationService, 
+        public DefaultDocTypeMapper(IContentTypeService contentTypeService,
+            IContentService contentService,
+            IKeyTransformer keyTransformer,
+            IPropertyEditorConverter propertyEditorConverter,
+            ILocalizationService localizationService,
             ILogger<DefaultDocTypeMapper> logger)
         {
             _contentTypeService = contentTypeService;
@@ -35,11 +35,11 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
             _logger = logger;
         }
 
-        public bool CanIMap(MigrationContent MigrationNode)
+        public bool CanIMap(MigrationContent migrationNode)
         {
             // Look for a DocType that has the same alias/name as the old one
             var contentTypeAliases = _contentTypeService.GetAllContentTypeAliases();
-            var contentTypeMatch = contentTypeAliases.Contains(MigrationNode.ContentType);
+            var contentTypeMatch = contentTypeAliases.Contains(migrationNode.ContentType);
             return contentTypeMatch;
         }
 
@@ -53,7 +53,7 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
             return CreateNewNode(oldNode, contentTypeAlias, null);
         }
 
-        public IContent MapNode(MigrationContent oldNode, IContent newNode, bool overwiteExisitingValues)
+        public IContent MapNode(MigrationContent oldNode, IContent newNode, bool overwriteExistingValues)
         {
             var contentType = _contentTypeService.Get(newNode.ContentType.Alias);
 
@@ -69,11 +69,20 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
                 var newProperty = newNode.Properties.First(x => x.Alias == oldProperty.Alias);
                 var hasValue = (newProperty.GetValue()?.ToString() ?? "").IsNullOrWhiteSpace() == false;
 
-                if (hasValue && overwiteExisitingValues == false) { continue; }
+                if (hasValue && overwriteExistingValues == false) { continue; }
+
+                var oldPropertyVaries = oldProperty.Values.Count > 1 || oldProperty.Values[0]?.Culture != "default";
+                var newPropertyVaries = newProperty.PropertyType.Variations == ContentVariation.Culture;
+                var oldNodeDefaultCulture = oldNode.GetDefaultCulture();
 
                 foreach (var oldValue in oldProperty.Values)
                 {
+                    // Skip old variant values if the new property doesn't vary by culture
+                    if (oldPropertyVaries && !newPropertyVaries && (oldValue.Culture != oldNodeDefaultCulture)) { continue; }
+
                     var value = oldValue.Value;
+
+                    // Save a NULL value if the old value is NULL or WhiteSpace
                     if (value.IsNullOrWhiteSpace())
                     {
                         try
@@ -156,16 +165,27 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
                         }
                     }
 
+                    // Attempt to save the transformed value
                     try
                     {
-                        // Save the value
-                        if (oldValue.Culture == "default")
+                        if (oldPropertyVaries && newPropertyVaries)
+                        {
+                            if (oldValue.Culture == "default")
+                            {
+                                newNode.SetValue(oldProperty.Alias, value, oldNodeDefaultCulture);
+                            }
+                            else
+                            {
+                                newNode.SetValue(oldProperty.Alias, value, oldValue.Culture);
+                            }
+                        }
+                        else if (!oldPropertyVaries && newPropertyVaries)
+                        {
+                            newNode.SetValue(oldProperty.Alias, value, oldNodeDefaultCulture);
+                        }
+                        else
                         {
                             newNode.SetValue(oldProperty.Alias, value);
-                        }
-                        else if (contentType?.VariesByCulture() == true)
-                        {
-                            newNode.SetValue(oldProperty.Alias, value, oldValue.Culture);
                         }
                     }
                     catch (Exception ex)
@@ -209,7 +229,7 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
                         newNode.SetCultureName(oldNode.Name, newDefaultCulture);
                     }
                     else
-                    { 
+                    {
                         newNode.SetCultureName(oldNode.Name, oldDefaultCulture);
                     }
                 }
