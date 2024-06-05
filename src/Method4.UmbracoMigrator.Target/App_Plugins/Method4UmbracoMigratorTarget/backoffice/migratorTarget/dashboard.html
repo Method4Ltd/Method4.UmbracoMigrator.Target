@@ -76,7 +76,7 @@
     </umb-box>
 
     <signalr-migration-status></signalr-migration-status>
-    
+
     <relation-lookup></relation-lookup>
 
     <umb-box>
@@ -85,7 +85,7 @@
         <umb-box-content>
             <ul>
                 <li>
-                    <span>Depending on the size of the import, the UI can time out before the import completes. Watch the log for the import status.</span>
+                    <span>Has the SignalR log stopped? Refresh, it should re-connect. Please check the log for warnings and exceptions.</span>
                 </li>
                 <li>
                     <span>Need to support in place file replacements of the migrated media nodes?</span>
@@ -100,6 +100,20 @@
                     <ul>
                         <li>
                             <spn>You might need to use the <code>Umbraco.Cms.Infrastructure.Macros.MacroTagParser.FormatRichTextContentForPersistence()</code> method, to ensure that the macro html is formatted correctly.</spn>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>Slow import? Try the following:</span>
+                    <ul>
+                        <li>
+                            Disable the Examine Indexes during the migration import. - <a class="link" href="https://umbracare.net/blog/how-to-disable-examine-indexing-in-umbraco/#:~:text=DisableExamineExternalIndex%20Method,enhancing%20performance%20under%20certain%20conditions">"How to Disable Examine Indexing in Umbraco" - UmbraCare.net</a>
+                        </li>
+                        <li>
+                            Disable Content Cleanup Policy during the migration import. - <a class="link" href="https://docs.umbraco.com/umbraco-cms/fundamentals/data/content-version-cleanup">Umbraco docs</a>
+                        </li>
+                        <li>
+                            Disable uSync <i>ExportOnSave</i> setting during the migration import. - <a class="link" href="https://docs.jumoo.co.uk/usync/usync/reference/config/">uSync docs</a>
                         </li>
                     </ul>
                 </li>
