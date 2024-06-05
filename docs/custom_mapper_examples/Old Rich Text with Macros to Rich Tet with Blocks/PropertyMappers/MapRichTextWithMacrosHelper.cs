@@ -1,14 +1,14 @@
 using System.Text.RegularExpressions;
 
-namespace MySite.Migration.Helpers 
+namespace MySite.Migration.PropertyMappers 
 {
-    public static class MapRichTextWithMacrosHelper 
+    public class RichTextWithMacrosMapper : IRichTextWithMacrosMapper // interface for registering on startup
     {
         private readonly IKeyTransformer _keyTransformer;
         private readonly IGridComponentMapper _gridComponentMapper;
         private readonly IContentTypeService _contentTypeService;
 
-        public MapRichTextWithMacrosHelper(
+        public RichTextWithMacrosMapper(
             IKeyTransformer keyTransformer, 
             IGridComponentMapper gridComponentMapper,
             IContentTypeService contentTypeService
@@ -23,9 +23,9 @@ namespace MySite.Migration.Helpers
         {
             var newRichText = new RichText();
 
-            var oldRichTextReferencesTransformed = _keyTransformer.TransformOldKeyReferences("Umbraco.TinyMCE", oldRichText);
+            var richTextReferencesTransformed = _keyTransformer.TransformOldKeyReferences("Umbraco.TinyMCE", oldRichText);
 
-            MatchCollection macros = Regex.Matches(oldRichTextReferencesTransformed, @"<\?UMBRACO_MACRO.*/>");
+            MatchCollection macros = Regex.Matches(richTextReferencesTransformed, @"<\?UMBRACO_MACRO.*/>");
 
             foreach (Match m in macros) 
             {
@@ -37,14 +37,18 @@ namespace MySite.Migration.Helpers
                 {
                     string markupBlockText = "<umb-rte-block data-content-udi=\"{blockElementUdi}\"><!--Umbraco-Block--></umb-rte-block>";
                     markupBlockText = markupBlockText.Replace("{blockElementUdi}", guidUdi.ToString());
-                    oldRichTextReferencesTransformed = oldRichTextReferencesTransformed.Replace(macroString, markupBlockText);
+                    richTextReferencesTransformed = richTextReferencesTransformed.Replace(macroString, markupBlockText);
                     newRichText.Blocks.Layout.ContentUdis.Add(new Dictionary<string, string>
                     {
                         {"contentUdi", guidUdi.ToString() },
                     });
                     newRichText.Blocks.ContentData.Add(GetBlock(macroAlias, macroString, guidUdi.ToString()));
                 }
+
+                newRichText.Markup = richTextReferencesTransformed;
             }
+
+            return JsonSerializer.Serialize(newRichtext);
         }
 
         private object GetBlock(string macroAlias, string macroString, string udi) 
