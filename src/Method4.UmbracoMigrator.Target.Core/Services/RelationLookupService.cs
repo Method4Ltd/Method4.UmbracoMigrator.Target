@@ -124,7 +124,7 @@ namespace Method4.UmbracoMigrator.Target.Core.Services
             var foundLookup = queryResult.FirstOrDefault(); // There should only ever be 1
             if (foundLookup == null)
             {
-                _logger.LogWarning("Lookup Not found for {lookupType}: {lookupValue}", columnName, value);
+                _logger.LogDebug("Lookup Not found for {lookupType}: {lookupValue}", columnName, value);
                 return null;
             }
 

@@ -5,13 +5,14 @@ using Method4.UmbracoMigrator.Target.Core.Models.MigrationModels;
 using Method4.UmbracoMigrator.Target.Core.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
 
 namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
 {
-    public class MigrationPhase4 : IMigrationPhase4
+    internal class MigrationPhase4 : IMigrationPhase4
     {
         private readonly ILogger<MigrationPhase4> _logger;
         private readonly IRelationLookupService _relationLookupService;
@@ -59,12 +60,25 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
             _hubService.SendMessage(4, "Starting Migration Phase 4");
             _logger.LogInformation("Starting Migration Phase 4");
 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            SetPublishStatuses();
+
+            stopwatch.Stop();
+
+            _hubService.SendMessage(4, $"Completed Migration Phase 4 - {stopwatch.Humanize()}");
+            _logger.LogInformation("Completed Migration Phase 4 - {elapsedMilliseconds}", stopwatch.Humanize());
+        }
+
+        private void SetPublishStatuses()
+        {
             var contentNodesToMigrateTotal = _contentNodesToMigrate!.Count;
             var contentNodesCount = 0;
             foreach (var migrationContent in _contentNodesToMigrate!)
             {
                 contentNodesCount++;
-                _hubService.SendMessage(4, $"Setting content publish status - {contentNodesCount}/{contentNodesToMigrateTotal} - \"{migrationContent.Name.Truncate()}\"");
+                _hubService.SendMessage(4, $"Setting content publish status - {contentNodesCount}/{contentNodesToMigrateTotal} - \"{migrationContent.Name.Truncate(20)}\"");
 
                 var relation = _relationLookupService.GetRelationByOldKey(migrationContent.Key);
                 var newKey = relation?.NewKeyAsGuid;
@@ -138,7 +152,7 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
             foreach (var media in _mediaNodesToMigrate!)
             {
                 mediaNodesCount++;
-                _hubService.SendMessage(4, $"Setting media publish status - {mediaNodesCount}/{mediaNodesToMigrateTotal} - \"{media.Name.Truncate()}\"");
+                _hubService.SendMessage(4, $"Setting media publish status - {mediaNodesCount}/{mediaNodesToMigrateTotal} - \"{media.Name.Truncate(20)}\"");
 
                 var relation = _relationLookupService.GetRelationByOldKey(media.Key);
                 var newKey = relation?.NewKeyAsGuid;
@@ -151,9 +165,6 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
                     continue;
                 }
             }
-
-            _hubService.SendMessage(4, "Completed Migration Phase 4");
-            _logger.LogInformation("Completed Migration Phase 4");
         }
 
         /// <summary>
@@ -238,7 +249,7 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
             var result = _mediaService.MoveToRecycleBin(mediaNode);
             if (result.Success == false)
             {
-                _hubService.SendMessage(4, $"Failed to trash media node \"{mediaNode.Name.Truncate()}\" - \"{result.Result}\"");
+                _hubService.SendMessage(4, $"Failed to trash media node \"{mediaNode.Name?.Truncate(20)}\" - \"{result.Result}\"");
                 _logger.LogError(result.Exception, "Failed to trash media node \"{id}\". {result}", mediaNode.Id, result.Result);
             }
         }

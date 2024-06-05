@@ -1,4 +1,5 @@
 ﻿using Method4.UmbracoMigrator.Source.Core.Services;
+using Method4.UmbracoMigrator.Target.Core.Extensions;
 using Method4.UmbracoMigrator.Target.Core.Hubs;
 using Method4.UmbracoMigrator.Target.Core.Mappers;
 using Method4.UmbracoMigrator.Target.Core.Models.DataModels;
@@ -7,12 +8,13 @@ using Method4.UmbracoMigrator.Target.Core.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
 
 namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
 {
-    public class MigrationPhase2 : IMigrationPhase2
+    internal class MigrationPhase2 : IMigrationPhase2
     {
         private readonly IMigratorFileService _migratorFileService;
         private readonly ILogger<MigrationPhase2> _logger;
@@ -62,10 +64,17 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
 #pragma warning disable CS8604 // Possible null reference argument.
             _hubService.SendMessage(2, "Starting Migration Phase 2");
             _logger.LogInformation("Starting Migration Phase 2");
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             MigrateMediaFiles(_mediaNodesToMigrate);
             MigrateMediaProperties(_mediaNodesToMigrate);
-            _hubService.SendMessage(2, "Completed Migration Phase 2");
-            _logger.LogInformation("Completed Migration Phase 2");
+
+            stopwatch.Stop();
+
+            _hubService.SendMessage(2, $"Completed Migration Phase 2 - {stopwatch.Humanize()}");
+            _logger.LogInformation("Completed Migration Phase 2 - {elapsedMilliseconds}", stopwatch.Humanize());
 #pragma warning restore CS8604 // Possible null reference argument.
         }
 

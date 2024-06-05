@@ -6,11 +6,13 @@ using Method4.UmbracoMigrator.Target.Core.Models.MigrationModels;
 using Method4.UmbracoMigrator.Target.Core.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
 
 namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
 {
-    public class MigrationPhase3 : IMigrationPhase3
+    internal class MigrationPhase3 : IMigrationPhase3
     {
         private readonly IMappingCollectionService _migrationMapperService;
         private readonly IInternalDocTypeMapping _defaultDocTypeMapper;
@@ -52,9 +54,16 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
 #pragma warning disable CS8604 // Possible null reference argument.
             _hubService.SendMessage(3, "Starting Migration Phase 3");
             _logger.LogInformation("Starting Migration Phase 3");
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             MigrateContentProperties(_contentNodesToMigrate);
-            _hubService.SendMessage(3, "Completed Migration Phase 3");
-            _logger.LogInformation("Completed Migration Phase 3");
+
+            stopwatch.Stop();
+
+            _hubService.SendMessage(3, $"Completed Migration Phase 3 - {stopwatch.Humanize()}");
+            _logger.LogInformation("Completed Migration Phase 3 - {elapsedMilliseconds}", stopwatch.Humanize());
 #pragma warning restore CS8604 // Possible null reference argument.
         }
 
@@ -67,7 +76,7 @@ namespace Method4.UmbracoMigrator.Target.Core.MigrationSteps
             foreach (var oldNode in nodesToMigrate)
             {
                 count++;
-                _hubService.SendMessage(3, $"Migrating content node properties - {count}/{nodesToMigrate.Count} - \"{oldNode.Name.Truncate()}\"");
+                _hubService.SendMessage(3, $"Migrating content node properties - {count}/{nodesToMigrate.Count} - \"{oldNode.Name.Truncate(20)}\"");
                 var customMapping = _migrationMapperService.GetDocTypeMapping(oldNode);
 
                 // Find our new node
