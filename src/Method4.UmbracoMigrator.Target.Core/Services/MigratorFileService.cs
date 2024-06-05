@@ -1,17 +1,13 @@
-﻿using Azure.Storage.Blobs;
-using Method4.UmbracoMigrator.Target.Core.Factories;
+﻿using Method4.UmbracoMigrator.Target.Core.Factories;
 using Method4.UmbracoMigrator.Target.Core.Hubs;
 using Method4.UmbracoMigrator.Target.Core.Models.MigrationModels;
 using Method4.UmbracoMigrator.Target.Core.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
-using Smidge.Models;
 using System.IO.Compression;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
-using Method4.UmbracoMigrator.Target.Core.Extensions;
+using Umbraco.Extensions;
 
 namespace Method4.UmbracoMigrator.Source.Core.Services
 {
@@ -30,10 +26,10 @@ namespace Method4.UmbracoMigrator.Source.Core.Services
         private readonly string tempMediaFolderPath;
         private readonly string umbracoMediaDiskFolderPath;
 
-        public MigratorFileService(ILogger<MigratorFileService> logger, 
-            IWebHostEnvironment webHostEnvironment, 
-            IMigrationContentFactory migrationContentFactory, 
-            IMigrationMediaFactory migrationMediaFactory, 
+        public MigratorFileService(ILogger<MigratorFileService> logger,
+            IWebHostEnvironment webHostEnvironment,
+            IMigrationContentFactory migrationContentFactory,
+            IMigrationMediaFactory migrationMediaFactory,
             IMigratorBlobService migratorBlobService,
             IHubContext<MigrationHub> hubContext)
         {
@@ -203,7 +199,7 @@ namespace Method4.UmbracoMigrator.Source.Core.Services
                         blobClient.Upload(fileStream, true);
                         fileStream.Close();
 
-                        _hubService.SendMessage(2, $"Uploaded - {fileFoldersCount}/{fileFoldersTotal} folders - {filesCount}/{filesTotal} files - \"{blobPath.Truncate()}\"");
+                        _hubService.SendMessage(2, $"Uploaded - {fileFoldersCount}/{fileFoldersTotal} folders - {filesCount}/{filesTotal} files - \"{blobPath.Truncate(50)}\"");
                     }
                 }
 
@@ -269,7 +265,7 @@ namespace Method4.UmbracoMigrator.Source.Core.Services
 
                 _logger.LogTrace("Copying {0}\\{1}", target.FullName, fi.Name);
                 fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
-                _hubService.SendMessage(2, $"Copied - {count}/{filesTotal} - \"{fi.Name.Truncate()}\"");
+                _hubService.SendMessage(2, $"Copied - {count}/{filesTotal} - \"{fi.Name.Truncate(50)}\"");
             }
 
             // Copy each subdirectory using recursion.

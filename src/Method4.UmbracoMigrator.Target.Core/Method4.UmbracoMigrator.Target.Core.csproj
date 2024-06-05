@@ -23,6 +23,7 @@
 	<!-- Include NuGet dependencies -->
 	<ItemGroup>
 		<PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
+		<PackageReference Include="Humanizer.Core" Version="3.0.0-beta.13" />
 		<PackageReference Include="Skybrud.Umbraco.Redirects" Version="[4.0.17,4.999)" />
 		<PackageReference Include="Umbraco.Cms.Core" Version="[10.0.0,12.999)" />
 		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[10.0.0,12.999)" />
