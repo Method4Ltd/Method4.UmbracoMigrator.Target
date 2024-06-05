@@ -122,3 +122,12 @@
     .migrator-dashboard .link {
        text-decoration: underline;
     }
+
+    .migrator-dashboard li {
+        margin-top: 10px;
+    }
+
+    .migrator-dashboard li:first-child,
+    .migrator-dashboard li li {
+        margin-top: 0;
+    }
