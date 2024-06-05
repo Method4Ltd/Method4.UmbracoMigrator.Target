@@ -6,6 +6,7 @@ using Method4.UmbracoMigrator.Target.Core.Hubs;
 using Method4.UmbracoMigrator.Target.Core.Mappers;
 using Method4.UmbracoMigrator.Target.Core.MediaPathSchemes;
 using Method4.UmbracoMigrator.Target.Core.MigrationSteps;
+using Method4.UmbracoMigrator.Target.Core.MigrationSteps.Tasks;
 using Method4.UmbracoMigrator.Target.Core.Models.DataModels;
 using Method4.UmbracoMigrator.Target.Core.Options;
 using Method4.UmbracoMigrator.Target.Core.Services;
@@ -37,9 +38,9 @@ public class Composer : IComposer
         builder.Services.AddTransient<IMigrationMediaFactory, MigrationMediaFactory>();
 
         // Services
-        builder.Services.AddSingleton<IMigratorBlobService, MigratorBlobService>();
-        builder.Services.AddSingleton<IMigratorFileService, MigratorFileService>();
-        builder.Services.AddSingleton<IRelationLookupService, RelationLookupService>();
+        builder.Services.AddTransient<IMigratorBlobService, MigratorBlobService>();
+        builder.Services.AddTransient<IMigratorFileService, MigratorFileService>();
+        builder.Services.AddTransient<IRelationLookupService, RelationLookupService>();
 
         // Helpers
         builder.Services.AddTransient<IKeyTransformer, KeyTransformer>();
@@ -60,11 +61,15 @@ public class Composer : IComposer
         // Mapping Collection Service
         builder.Services.AddSingleton<IMappingCollectionService, MappingCollectionService>();
 
-        // Mapping Phases
-        builder.Services.AddSingleton<IMigrationPhase1, MigrationPhase1>();
-        builder.Services.AddSingleton<IMigrationPhase2, MigrationPhase2>();
-        builder.Services.AddSingleton<IMigrationPhase3, MigrationPhase3>();
-        builder.Services.AddSingleton<IMigrationPhase4, MigrationPhase4>();
+        // Migration Tasks
+        builder.Services.AddScoped<IContentStructureTask, ContentStructureTask>();
+        builder.Services.AddScoped<IMediaStructureTask, MediaStructureTask>();
+
+        // Migration Phases
+        builder.Services.AddScoped<IMigrationPhase1, MigrationPhase1>();
+        builder.Services.AddScoped<IMigrationPhase2, MigrationPhase2>();
+        builder.Services.AddScoped<IMigrationPhase3, MigrationPhase3>();
+        builder.Services.AddScoped<IMigrationPhase4, MigrationPhase4>();
 
         // SignalR
         builder.Services.AddSignalR();
