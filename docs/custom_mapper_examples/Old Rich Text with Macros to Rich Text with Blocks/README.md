@@ -4,4 +4,4 @@
 
 An example custom mapper that will map an old Umbraco Rich text which used Macros, to the new Rich .
 
-In this example the `homePage` node has it's own properties and also inherits a composition called `mainComposition`.
+In this example the `contentPage` node has it's own properties and a rich text property that contains an image macro.
