@@ -201,9 +201,13 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
 
         private IContent CreateNewNode(MigrationContent oldNode, string contentTypeAlias, Guid? parentKey)
         {
+            var nodeName = oldNode.Trashed
+                ? oldNode.Name.Truncate(250, "") // Truncate to make sure we don't have max length (255) issues with Umbraco appending '(n)' numbers to the name if a non trashed duplicate exists
+                : oldNode.Name;
+
             var newNode = parentKey == null
-                ? _contentService.Create(oldNode.Name, -1, contentTypeAlias)
-                : _contentService.Create(oldNode.Name, (Guid)parentKey, contentTypeAlias);
+                ? _contentService.Create(nodeName, -1, contentTypeAlias)
+                : _contentService.Create(nodeName, (Guid)parentKey, contentTypeAlias);
 
             newNode.SortOrder = oldNode.SortOrder;
 
@@ -213,10 +217,13 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
             {
                 if (oldNode.VariesByCulture)
                 {
-                    foreach (var migrationNodeName in oldNode.NodeNames)
+                    foreach (var variantName in oldNode.NodeNames)
                     {
-                        if (migrationNodeName.Culture == "default") { continue; }
-                        newNode.SetCultureName(migrationNodeName.Name, migrationNodeName.Culture);
+                        if (variantName.Culture == "default") { continue; }
+                        var vName = oldNode.Trashed
+                            ? variantName.Name.Truncate(250, "") // See above
+                            : variantName.Name;
+                        newNode.SetCultureName(vName, variantName.Culture);
                     }
                 }
                 else
@@ -226,11 +233,11 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
                     if (oldDefaultCulture.IsNullOrWhiteSpace())
                     {
                         var newDefaultCulture = _localizationService.GetDefaultLanguageIsoCode();
-                        newNode.SetCultureName(oldNode.Name, newDefaultCulture);
+                        newNode.SetCultureName(nodeName, newDefaultCulture);
                     }
                     else
                     {
-                        newNode.SetCultureName(oldNode.Name, oldDefaultCulture);
+                        newNode.SetCultureName(nodeName, oldDefaultCulture);
                     }
                 }
             }
