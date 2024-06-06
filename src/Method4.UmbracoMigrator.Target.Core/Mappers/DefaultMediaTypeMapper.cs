@@ -34,16 +34,12 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
 
         public IMedia CreateNode(MigrationMedia oldNode, string contentTypeAlias, Guid parentKey)
         {
-            var newNode = _mediaService.CreateMedia(oldNode.Name, parentKey, contentTypeAlias);
-            newNode.SortOrder = oldNode.SortOrder;
-            return newNode;
+            return CreateNewNode(oldNode, contentTypeAlias, parentKey);
         }
 
         public IMedia CreateRootNode(MigrationMedia oldNode, string contentTypeAlias)
         {
-            var newNode = _mediaService.CreateMedia(oldNode.Name, -1, contentTypeAlias);
-            newNode.SortOrder = oldNode.SortOrder;
-            return newNode;
+            return CreateNewNode(oldNode, contentTypeAlias, null);
         }
 
         public IMedia MapNode(MigrationMedia oldNode, IMedia newNode, bool overwriteExistingValues)
@@ -94,6 +90,20 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
             }
 
             // TODO: Support variant properties
+            return newNode;
+        }
+
+        private IMedia CreateNewNode(MigrationMedia oldNode, string contentTypeAlias, Guid? parentKey)
+        {
+            var nodeName = oldNode.Trashed
+                ? oldNode.Name.Truncate(250, "") // Truncate to make sure we don't have max length (255) issues with Umbraco appending '(n)' numbers to the name if a non trashed duplicate exists
+                : oldNode.Name;
+
+            var newNode = parentKey == null ?
+                _mediaService.CreateMedia(nodeName, -1, contentTypeAlias)
+                : _mediaService.CreateMedia(nodeName, (Guid)parentKey, contentTypeAlias);
+
+            newNode.SortOrder = oldNode.SortOrder;
             return newNode;
         }
     }
