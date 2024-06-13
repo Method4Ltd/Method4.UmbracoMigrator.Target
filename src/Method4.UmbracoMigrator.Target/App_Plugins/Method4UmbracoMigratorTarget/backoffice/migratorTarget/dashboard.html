@@ -36,6 +36,38 @@
                             label-off="Clean import (delete everything before importing)"
                             label-position="right">
                 </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.PhaseOneEnabled"
+                            on-click="vm.toggleSetting('PhaseOneEnabled')"
+                            show-labels="true"
+                            label-on="Phase 1 Enabled (Creation of content and media nodes)"
+                            label-off="Phase 1 Diasbled (Creation of content and media nodes)"
+                            label-position="right">
+                </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.PhaseTwoEnabled"
+                            on-click="vm.toggleSetting('PhaseTwoEnabled')"
+                            show-labels="true"
+                            label-on="Phase 2 Enabled (Map media node properties)"
+                            label-off="Phase 2 Diasbled (Map media node properties)"
+                            label-position="right">
+                </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.PhaseThreeEnabled"
+                            on-click="vm.toggleSetting('PhaseThreeEnabled')"
+                            show-labels="true"
+                            label-on="Phase 3 Enabled (Map content node properties)"
+                            label-off="Phase 3 Disabled (Map content node properties)"
+                            label-position="right">
+                </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.PhaseFourEnabled"
+                            on-click="vm.toggleSetting('PhaseFourEnabled')"
+                            show-labels="true"
+                            label-on="Phase 4 Enabled (Set published status of nodes)"
+                            label-off="Phase 4 Diasbled (Set published status of nodes)"
+                            label-position="right">
+                </umb-toggle>
             </div>
         </umb-box-content>
     </umb-box>

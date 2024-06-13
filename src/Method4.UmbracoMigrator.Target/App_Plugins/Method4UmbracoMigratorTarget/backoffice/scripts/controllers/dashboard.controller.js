@@ -13,7 +13,11 @@
             OverwriteExistingValues: true,
             DisableAutoMapping: false,
             CleanImport: false,
-            ChosenSnapshotName: null
+            ChosenSnapshotName: null,
+            PhaseOneEnabled: true,
+            PhaseTwoEnabled: true,
+            PhaseThreeEnabled: true,
+            PhaseFourEnabled: true
         };
         initialise();
 
