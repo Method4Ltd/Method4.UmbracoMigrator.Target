@@ -7,5 +7,9 @@
         public bool DisableDefaultMappers { get; set; }
         public bool CleanImport { get; set; }
         public string? ChosenSnapshotName { get; set; }
+        public bool PhaseOneEnabled { get; set; }
+        public bool PhaseTwoEnabled { get; set; }
+        public bool PhaseThreeEnabled { get; set; }
+        public bool PhaseFourEnabled { get; set; }
     }
 }

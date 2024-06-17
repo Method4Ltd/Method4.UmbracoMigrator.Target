@@ -1,5 +1,5 @@
 ﻿<div class="migrator-dashboard" ng-controller="migratorTarget.dashboardController as vm">
-    <umb-box>
+    <umb-box class="settings">
         <umb-box-header title="Settings">
         </umb-box-header>
         <umb-box-content>
@@ -16,16 +16,16 @@
                             checked="vm.settings.OverwriteExistingValues"
                             on-click="vm.toggleSetting('OverwriteExistingValues')"
                             show-labels="true"
-                            label-on="Overwrite if the node/property already exists"
-                            label-off="Overwrite if the node/property already exists"
+                            label-on="Overwrite data if the node/property already exists"
+                            label-off="Overwrite data if the node/property already exists"
                             label-position="right">
                 </umb-toggle>
                 <umb-toggle class="settings-container__setting"
                             checked="vm.settings.DisableDefaultMappers"
                             on-click="vm.toggleSetting('DisableDefaultMappers')"
                             show-labels="true"
-                            label-on="Disable Default Mappers"
-                            label-off="Disable Default Mappers"
+                            label-on="Disable default mappers"
+                            label-off="Disable default mappers"
                             label-position="right">
                 </umb-toggle>
                 <umb-toggle class="settings-container__setting"
@@ -40,6 +40,47 @@
         </umb-box-content>
     </umb-box>
 
+    <umb-box class="phases">
+        <umb-box-header title="Migration Phases">
+        </umb-box-header>
+        <umb-box-content>
+            <div class="settings-container">
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.PhaseOneEnabled"
+                            on-click="vm.toggleSetting('PhaseOneEnabled')"
+                            show-labels="true"
+                            label-on="Phase 1 - Creation of content and media nodes"
+                            label-off="Phase 1 - Creation of content and media nodes"
+                            label-position="right">
+                </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.PhaseTwoEnabled"
+                            on-click="vm.toggleSetting('PhaseTwoEnabled')"
+                            show-labels="true"
+                            label-on="Phase 2 - Map media node properties"
+                            label-off="Phase 2 - Map media node properties"
+                            label-position="right">
+                </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.PhaseThreeEnabled"
+                            on-click="vm.toggleSetting('PhaseThreeEnabled')"
+                            show-labels="true"
+                            label-on="Phase 3 - Map content node properties"
+                            label-off="Phase 3 - Map content node properties"
+                            label-position="right">
+                </umb-toggle>
+                <umb-toggle class="settings-container__setting"
+                            checked="vm.settings.PhaseFourEnabled"
+                            on-click="vm.toggleSetting('PhaseFourEnabled')"
+                            show-labels="true"
+                            label-on="Phase 4 - Set published status of nodes"
+                            label-off="Phase 4 - Set published status of nodes"
+                            label-position="right">
+                </umb-toggle>
+            </div>
+        </umb-box-content>
+    </umb-box>
+
     <umb-box>
         <umb-box-header title="Uploaded Migration Snapshots [~/wwwroot/migration-snapshots/]">
             <umb-button action="vm.beginImport();"
@@ -48,7 +89,7 @@
                         type="button"
                         button-style="action"
                         state="vm.beginMigrationButtonState"
-                        disabled="vm.settings.ChosenSnapshotName === null">
+                        disabled="vm.importEnabled()">
             </umb-button>
             <umb-button action="vm.deleteAllSnapshots()"
                         label-key="migratorTarget_deleteAllSnapshots"
@@ -82,7 +123,7 @@
     <umb-box>
         <umb-box-header title="Tips">
         </umb-box-header>
-        <umb-box-content>
+        <umb-box-content class="tips">
             <ul>
                 <li>
                     <span>Depending on the size of the import, the UI can time out before the import completes, but SignalR should still report the current status.</span>
