@@ -161,7 +161,7 @@ namespace Method4.UmbracoMigrator.Target.Core.Mappers
                         {
                             _logger.LogError(ex, "Failed to Format Rich Text Content For Persistence on property {propertyAlias}, for node {nodeId} [{nodeKey}]. Macros may not render correctly.",
                                 oldProperty.Alias, newNode.Id, newNode.Key);
-                            throw;
+                            // Ignore as this won't break the save/publish, and any broken data can be fixed in a custom mapper.
                         }
                     }
 
