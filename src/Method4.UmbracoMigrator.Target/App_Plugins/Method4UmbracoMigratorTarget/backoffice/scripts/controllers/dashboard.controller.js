@@ -13,11 +13,23 @@
             OverwriteExistingValues: true,
             DisableAutoMapping: false,
             CleanImport: false,
-            ChosenSnapshotName: null
+            ChosenSnapshotName: null,
+            PhaseOneEnabled: true,
+            PhaseTwoEnabled: true,
+            PhaseThreeEnabled: true,
+            PhaseFourEnabled: true
         };
         initialise();
 
         //// Public Functions ////
+        vm.importEnabled = () => {
+            return vm.settings.ChosenSnapshotName === null
+                || (vm.settings.PhaseOneEnabled === false
+                    && vm.settings.PhaseTwoEnabled === false
+                    && vm.settings.PhaseThreeEnabled === false
+                    && vm.settings.PhaseFourEnabled === false);
+        }
+
         vm.toggleSetting = (settingName) => {
             vm.settings[settingName] = !vm.settings[settingName];
         }

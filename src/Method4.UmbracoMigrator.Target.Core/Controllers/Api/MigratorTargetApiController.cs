@@ -72,11 +72,19 @@ namespace Method4.UmbracoMigrator.Target.Core.Controllers.Api
                 "[DontPublishAfterImport={dontPublishAfterImport}], " +
                 "[OverwriteExistingValues={overwriteExistingValues}], " +
                 "[DisableDefaultMappers={disableDefaultMappers}] " +
-                "[CleanImport={cleanImport}]",
+                "[CleanImport={cleanImport}]" +
+                "[Phase1Enabled={phase1Enabled}]" +
+                "[Phase2Enabled={phase2Enabled}]" +
+                "[Phase3Enabled={phase3Enabled}]" +
+                "[Phase4Enabled={phase4Enabled}]",
                 settings.DontPublishAfterImport,
                 settings.OverwriteExistingValues,
                 settings.DisableDefaultMappers,
-                settings.CleanImport);
+                settings.CleanImport,
+                settings.PhaseOneEnabled,
+                settings.PhaseTwoEnabled,
+                settings.PhaseThreeEnabled,
+                settings.PhaseFourEnabled);
 
             _migratorFileService.UnzipSnapshotFile(settings.ChosenSnapshotName!);
             var contentNodes = _migratorFileService.LoadContentXml();
@@ -93,55 +101,68 @@ namespace Method4.UmbracoMigrator.Target.Core.Controllers.Api
             }
 
             // Phase 1 - Node Structure
-            try
+            if (settings.PhaseOneEnabled)
             {
-                _migrationPhase1.SetupMigrationPhase(contentNodes, mediaNodes, settings);
-                _migrationPhase1.RunMigrationPhase();
-            }
-            catch (Exception ex)
-            {
-                _hubService.SendMessage(-1, "Migration failed on phase 1");
-                _logger.LogError(ex, "Migration failed on phase 1");
-                throw new MigrationFailedException(1, ex);
+                try
+                {
+                    _migrationPhase1.SetupMigrationPhase(contentNodes, mediaNodes, settings);
+                    _migrationPhase1.RunMigrationPhase();
+                }
+                catch (Exception ex)
+                {
+                    _hubService.SendMessage(-1, "Migration failed on phase 1");
+                    _logger.LogError(ex, "Migration failed on phase 1");
+                    throw new MigrationFailedException(1, ex);
+                }
             }
 
+
             // Phase 2 - Media
-            try
+            if (settings.PhaseTwoEnabled)
             {
-                _migrationPhase2.SetupMigrationPhase(mediaNodes, settings);
-                _migrationPhase2.RunMigrationPhase();
-            }
-            catch (Exception ex)
-            {
-                _hubService.SendMessage(-1, "Migration failed on phase 2");
-                _logger.LogError(ex, "Migration failed on phase 2");
-                throw new MigrationFailedException(2, ex);
+                try
+                {
+                    _migrationPhase2.SetupMigrationPhase(mediaNodes, settings);
+                    _migrationPhase2.RunMigrationPhase();
+                }
+                catch (Exception ex)
+                {
+                    _hubService.SendMessage(-1, "Migration failed on phase 2");
+                    _logger.LogError(ex, "Migration failed on phase 2");
+                    throw new MigrationFailedException(2, ex);
+                }
             }
 
             // Phase 3 - Content
-            try
+            if (settings.PhaseThreeEnabled)
             {
-                _migrationPhase3.SetupMigrationPhase(contentNodes, settings);
-                _migrationPhase3.RunMigrationPhase();
-            }
-            catch (Exception ex)
-            {
-                _hubService.SendMessage(-1, "Migration failed on phase 3");
-                _logger.LogError(ex, "Migration failed on phase 3");
-                throw new MigrationFailedException(3, ex);
+                try
+                {
+                    _migrationPhase3.SetupMigrationPhase(contentNodes, settings);
+                    _migrationPhase3.RunMigrationPhase();
+                }
+                catch (Exception ex)
+                {
+                    _hubService.SendMessage(-1, "Migration failed on phase 3");
+                    _logger.LogError(ex, "Migration failed on phase 3");
+                    throw new MigrationFailedException(3, ex);
+                }
             }
 
             // Phase 4 - Publishing
-            try
+            if (settings.PhaseFourEnabled)
             {
-                _migrationPhase4.SetupMigrationPhase(contentNodes, mediaNodes, settings);
-                _migrationPhase4.RunMigrationPhase();
-            }
-            catch (Exception ex)
-            {
-                _hubService.SendMessage(-1, "Migration failed on phase 4");
-                _logger.LogError(ex, "Migration failed on phase 4");
-                throw new MigrationFailedException(4, ex);
+                try
+                {
+                    _migrationPhase4.SetupMigrationPhase(contentNodes, mediaNodes, settings);
+                    _migrationPhase4.RunMigrationPhase();
+                }
+                catch (Exception ex)
+                {
+                    _hubService.SendMessage(-1, "Migration failed on phase 4");
+                    _logger.LogError(ex, "Migration failed on phase 4");
+                    throw new MigrationFailedException(4, ex);
+                }
             }
 
             _hubService.SendMessage(-1, $"Completed migration import of snapshot {settings.ChosenSnapshotName}");

@@ -1,5 +1,9 @@
 ﻿.migrator-dashboard {
     position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
     padding: 20px;
     overflow: auto;
     overflow-y: scroll;
@@ -7,12 +11,29 @@
     bottom: 0;
     right: 0;
     left: 0;
+    background-image: url(/App_Plugins/Method4UmbracoMigratorTarget/backoffice/images/UmbracoMigratorTarget_Logo.png);
+    background-repeat: no-repeat;
+    background-size: 180px;
+    background-position: right 40px top 20px;
 }
+
+    .migrator-dashboard .umb-box,
+    .migrator-dashboard signalr-migration-status,
+    .migrator-dashboard relation-lookup {
+        width: 100%;
+        margin-bottom: 0;
+    }
+    .migrator-dashboard .settings,
+    .migrator-dashboard .phases {
+        width: 30%;
+    }
 
     .migrator-dashboard .settings-container {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        flex-grow: 1;
+        flex-shrink: 1;
     }
 
     .migrator-dashboard .settings-container__setting {
@@ -113,21 +134,21 @@
         text-align: left;
         padding-right: 40px;
     }
-    
+
     .migrator-dashboard .relation-lookup-result-container td {
         padding-right: 40px;
     }
 
 
     .migrator-dashboard .link {
-       text-decoration: underline;
+        text-decoration: underline;
     }
 
-    .migrator-dashboard li {
+    .migrator-dashboard .tips li {
         margin-top: 10px;
     }
 
-    .migrator-dashboard li:first-child,
-    .migrator-dashboard li li {
-        margin-top: 0;
-    }
+        .migrator-dashboard .tips li:first-child,
+        .migrator-dashboard .tips li li {
+            margin-top: 0;
+        }
