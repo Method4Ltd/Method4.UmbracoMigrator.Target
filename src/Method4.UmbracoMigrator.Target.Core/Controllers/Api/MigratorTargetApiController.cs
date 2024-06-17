@@ -72,11 +72,19 @@ namespace Method4.UmbracoMigrator.Target.Core.Controllers.Api
                 "[DontPublishAfterImport={dontPublishAfterImport}], " +
                 "[OverwriteExistingValues={overwriteExistingValues}], " +
                 "[DisableDefaultMappers={disableDefaultMappers}] " +
-                "[CleanImport={cleanImport}]",
+                "[CleanImport={cleanImport}]" +
+                "[Phase1Enabled={phase1Enabled}]" +
+                "[Phase2Enabled={phase2Enabled}]" +
+                "[Phase3Enabled={phase3Enabled}]" +
+                "[Phase4Enabled={phase4Enabled}]",
                 settings.DontPublishAfterImport,
                 settings.OverwriteExistingValues,
                 settings.DisableDefaultMappers,
-                settings.CleanImport);
+                settings.CleanImport,
+                settings.PhaseOneEnabled,
+                settings.PhaseTwoEnabled,
+                settings.PhaseThreeEnabled,
+                settings.PhaseFourEnabled);
 
             _migratorFileService.UnzipSnapshotFile(settings.ChosenSnapshotName!);
             var contentNodes = _migratorFileService.LoadContentXml();

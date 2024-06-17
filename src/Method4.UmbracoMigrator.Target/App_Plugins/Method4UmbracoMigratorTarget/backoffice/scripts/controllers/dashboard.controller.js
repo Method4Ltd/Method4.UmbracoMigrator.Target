@@ -22,6 +22,14 @@
         initialise();
 
         //// Public Functions ////
+        vm.importEnabled = () => {
+            return vm.settings.ChosenSnapshotName === null
+                || (vm.settings.PhaseOneEnabled === false
+                    && vm.settings.PhaseTwoEnabled === false
+                    && vm.settings.PhaseThreeEnabled === false
+                    && vm.settings.PhaseFourEnabled === false);
+        }
+
         vm.toggleSetting = (settingName) => {
             vm.settings[settingName] = !vm.settings[settingName];
         }
